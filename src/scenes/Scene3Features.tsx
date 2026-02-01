@@ -30,8 +30,8 @@ const COLORS = {
   accentOrangeDark: "#ea580c",
 };
 
-// ONBOARDING SCENE - 0 to 270 frames (9 seconds)
-const OnboardingScene: React.FC = () => {
+// ONBOARDING SCENE CONTENT - 0 to 270 frames (9 seconds)
+const OnboardingSceneContent: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -71,7 +71,6 @@ const OnboardingScene: React.FC = () => {
       style={{
         width: "100%",
         height: "100%",
-        backgroundColor: COLORS.bg,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -81,8 +80,6 @@ const OnboardingScene: React.FC = () => {
         overflow: "hidden",
       }}
     >
-      <GridBackground color="rgba(249, 115, 22, 0.08)" size="90px" />
-
       {/* Title - 50% bigger */}
       <div
         style={{
@@ -160,8 +157,8 @@ const OnboardingScene: React.FC = () => {
                   padding: 48,
                   opacity: stepOpacity,
                   transform: `translateY(${stepY}px) scale(${stepScale})`,
-                  boxShadow: `0 0 75px ${step.color}30, 0 6px 30px rgba(0,0,0,0.5)`,
-                  border: `3px solid ${step.color}40`,
+                  boxShadow: `0 0 75px ${step.color}50, 0 6px 30px rgba(0,0,0,0.5), inset 0 0 30px ${step.color}20`,
+                  border: `3px solid ${step.color}60`,
                 }}
               >
                 <div
@@ -298,8 +295,8 @@ const SparkleDecoration: React.FC<{
   );
 };
 
-// FEATURES SCENE - 270 to 540 frames (9 seconds)
-const FeaturesScene: React.FC = () => {
+// FEATURES SCENE CONTENT - 270 to 540 frames (9 seconds)
+const FeaturesSceneContent: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -345,7 +342,6 @@ const FeaturesScene: React.FC = () => {
       style={{
         width: "100%",
         height: "100%",
-        backgroundColor: COLORS.bg,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -355,14 +351,13 @@ const FeaturesScene: React.FC = () => {
         overflow: "hidden",
       }}
     >
-      <GridBackground color="rgba(249, 115, 22, 0.08)" size="90px" />
-
-      {/* Title - 50% bigger */}
+      {/* Title - 50% bigger, lowered */}
       <div
         style={{
           opacity: titleOpacity,
           transform: `translateY(${titleY}px)`,
-          marginBottom: 120,
+          marginBottom: 60,
+          marginTop: 120,
           textAlign: "center",
           zIndex: 10,
         }}
@@ -388,12 +383,12 @@ const FeaturesScene: React.FC = () => {
         </div>
       </div>
 
-      {/* Features Grid - 50% bigger */}
+      {/* Features Grid - 10% smaller */}
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(2, 1fr)",
-          gap: 60,
+          gap: 45,
           zIndex: 10,
         }}
       >
@@ -428,26 +423,26 @@ const FeaturesScene: React.FC = () => {
             <div
               key={index}
               style={{
-                width: 570,
-                height: 330,
+                width: 513,
+                height: 297,
                 backgroundColor: COLORS.cardBg,
-                borderRadius: 36,
+                borderRadius: 32,
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
-                padding: 48,
-                gap: 36,
+                padding: 43,
+                gap: 32,
                 opacity: featureOpacity,
                 transform: `translateY(${floatY}px) scale(${featureScale}) rotateX(${featureRotate}deg)`,
-                boxShadow: `0 0 60px ${feature.color}25, 0 6px 30px rgba(0,0,0,0.5)`,
-                border: `3px solid ${feature.color}35`,
+                boxShadow: `0 0 60px ${feature.color}50, 0 6px 30px rgba(0,0,0,0.5), inset 0 0 30px ${feature.color}20`,
+                border: `3px solid ${feature.color}60`,
               }}
             >
               <div
                 style={{
-                  width: 135,
-                  height: 135,
-                  borderRadius: 36,
+                  width: 122,
+                  height: 122,
+                  borderRadius: 32,
                   backgroundColor: `${feature.color}15`,
                   display: "flex",
                   justifyContent: "center",
@@ -455,15 +450,15 @@ const FeaturesScene: React.FC = () => {
                   flexShrink: 0,
                 }}
               >
-                <Icon size={66} color={feature.color} strokeWidth={1.5} />
+                <Icon size={60} color={feature.color} strokeWidth={1.5} />
               </div>
               <div style={{ flex: 1 }}>
                 <div
                   style={{
-                    fontSize: 39,
+                    fontSize: 35,
                     fontWeight: 700,
                     color: COLORS.textPrimary,
-                    marginBottom: 12,
+                    marginBottom: 10,
                     lineHeight: 1.2,
                   }}
                 >
@@ -471,7 +466,7 @@ const FeaturesScene: React.FC = () => {
                 </div>
                 <div
                   style={{
-                    fontSize: 27,
+                    fontSize: 24,
                     color: COLORS.textSecondary,
                   }}
                 >
@@ -502,7 +497,7 @@ const FeaturesScene: React.FC = () => {
   );
 };
 
-// Main Scene Component with fade transitions
+// Main Scene Component with fade transitions and explosion
 export const Scene3Features: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -510,6 +505,8 @@ export const Scene3Features: React.FC = () => {
   const scene1Duration = 270; // 9 seconds
   const scene2Duration = 270; // 9 seconds
   const fadeDuration = 45; // 1.5 second fade
+  const totalDuration = scene1Duration + scene2Duration;
+  const explosionStart = totalDuration - 30; // Start explosion 1 second before end
 
   // Fade out scene 1
   const scene1FadeOut = interpolate(
@@ -527,6 +524,29 @@ export const Scene3Features: React.FC = () => {
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
+  // Scene 2 fade out with explosion
+  const scene2FadeOut = interpolate(
+    frame,
+    [explosionStart - 15, explosionStart + 10],
+    [1, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+
+  // Scale explosion effect for scene 2
+  const explosionScale = spring({
+    frame: frame - explosionStart,
+    fps,
+    config: { damping: 15, stiffness: 150 },
+    durationInFrames: 30,
+  });
+  
+  const scaleValue = interpolate(
+    explosionScale,
+    [0, 1],
+    [1, 3],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+
   return (
     <div
       style={{
@@ -536,6 +556,25 @@ export const Scene3Features: React.FC = () => {
         overflow: "hidden",
       }}
     >
+      {/* Persistent Grid Background - stays visible through explosion */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 0,
+        }}
+      >
+        <GridBackground 
+          color="rgba(249, 115, 22, 0.08)" 
+          size="90px" 
+          showBlobs={true}
+          blobColors={{
+            green: "rgba(249, 115, 22, 0.15)",
+            red: "rgba(251, 146, 60, 0.15)",
+          }}
+        />
+      </div>
+
       {/* Scene 1: Onboarding */}
       <div
         style={{
@@ -543,9 +582,10 @@ export const Scene3Features: React.FC = () => {
           inset: 0,
           opacity: frame < scene1Duration + fadeDuration / 2 ? Math.max(0, scene1FadeOut) : 0,
           pointerEvents: "none",
+          zIndex: 1,
         }}
       >
-        <OnboardingScene />
+        <OnboardingSceneContent />
       </div>
 
       {/* Scene 2: Features */}
@@ -553,12 +593,16 @@ export const Scene3Features: React.FC = () => {
         style={{
           position: "absolute",
           inset: 0,
-          opacity: scene2FadeIn,
+          opacity: frame >= explosionStart ? scene2FadeOut : scene2FadeIn,
+          transform: frame >= explosionStart ? `scale(${scaleValue})` : "scale(1)",
           pointerEvents: "none",
+          zIndex: 1,
         }}
       >
-        <FeaturesScene />
+        <FeaturesSceneContent />
       </div>
+
+
     </div>
   );
 };
