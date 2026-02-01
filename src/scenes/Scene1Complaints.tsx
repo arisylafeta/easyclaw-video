@@ -126,7 +126,7 @@ export const Scene1Complaints: React.FC = () => {
         <GridBackground color={COLORS.grid} size="100px" showBlobs />
       )}
 
-      {/* Dark background container with glowing border - appears after morph completes */}
+      {/* Text and glowing border container - appears after morph completes */}
       {showContainer && (
         <div
           style={{
@@ -138,17 +138,17 @@ export const Scene1Complaints: React.FC = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: 24,
           }}
         >
-          {/* "We introduce You" text - above the border */}
+          {/* "We introduce You" text - above the border, bigger and higher */}
           <div
             style={{
-              fontSize: 48,
+              fontSize: 64,
               fontWeight: 600,
               color: COLORS.textWhite,
               fontFamily: "Inter, system-ui, sans-serif",
               textAlign: "center",
+              marginBottom: 40,
             }}
           >
             We introduce You
