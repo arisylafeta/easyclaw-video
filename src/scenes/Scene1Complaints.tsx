@@ -194,24 +194,33 @@ export const Scene1Complaints: React.FC = () => {
         }}
       />
 
-      {/* "You are not alone" text - centered in upper 40% */}
+      {/* "You are not alone" text - centered in upper 40% inside the box */}
       <div
         style={{
           position: "absolute",
-          top: "20%",
+          width: buttonWidth,
+          height: buttonHeight,
           left: "50%",
+          top: "50%",
           transform: "translate(-50%, -50%)",
           zIndex: 10,
-          whiteSpace: "nowrap",
+          overflow: "hidden",
+          display: "flex",
+          alignItems: "flex-start",
+          justifyContent: "center",
+          paddingTop: "10%",
+          opacity: screenshotOpacity,
         }}
       >
         <span
           style={{
-            fontSize: 120,
+            fontSize: 120 * screenshotScale,
             fontWeight: 800,
             color: COLORS.textWhite,
             textAlign: "center",
-            display: "block",
+            whiteSpace: "nowrap",
+            transform: `scale(${screenshotScale})`,
+            transformOrigin: "center top",
           }}
         >
           You are not alone
