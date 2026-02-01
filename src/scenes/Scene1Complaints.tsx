@@ -70,14 +70,15 @@ export const Scene1Complaints: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
-  // Text entrance animation (slides up from below)
-  const textEntranceProgress = interpolate(frame, [0, 30], [0, 1], {
+  // Text entrance animation (slides up from below with fade)
+  const textEntranceProgress = interpolate(frame, [0, 45], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const textSlideUp = interpolate(textEntranceProgress, [0, 1], [50, 0], {
+  const textSlideUp = interpolate(textEntranceProgress, [0, 1], [200, 0], {
     easing: Easing.out(Easing.cubic),
   });
+  const textEntranceOpacity = textEntranceProgress;
 
   // OpenClaw text types (4-5s = 120-150 frames)
   const buttonTextProgress = Math.max(0, frame - 120);
@@ -231,6 +232,7 @@ export const Scene1Complaints: React.FC = () => {
             whiteSpace: "nowrap",
             transform: `translateY(${textSlideUp}px) scale(${screenshotScale})`,
             transformOrigin: "center top",
+            opacity: textEntranceOpacity,
           }}
         >
           You are not alone
@@ -238,12 +240,13 @@ export const Scene1Complaints: React.FC = () => {
         {/* Orange underline */}
         <div
           style={{
-            width: 40,
+            width: 200,
             height: 3,
             backgroundColor: COLORS.accentOrange,
             marginTop: 16 * screenshotScale,
             transform: `translateY(${textSlideUp}px) scale(${screenshotScale})`,
             transformOrigin: "center top",
+            opacity: textEntranceOpacity,
           }}
         />
       </div>
