@@ -106,6 +106,16 @@ export const Scene1Complaints: React.FC = () => {
   // Container with glowing border appears after morph completes (frame >= 120)
   const showContainer = frame >= 120;
 
+  // Text fade-in animation from bottom (120-150 frames = 1 second)
+  const textAnimationProgress = interpolate(frame, [120, 150], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const textSlideUp = interpolate(textAnimationProgress, [0, 1], [100, 0], {
+    easing: Easing.out(Easing.cubic),
+  });
+  const textOpacity = textAnimationProgress;
+
   return (
     <div
       style={{
@@ -133,8 +143,9 @@ export const Scene1Complaints: React.FC = () => {
             position: "absolute",
             left: "50%",
             top: "20%",
-            transform: "translate(-50%, -50%)",
+            transform: `translate(-50%, calc(-50% + ${textSlideUp}px))`,
             zIndex: 6,
+            opacity: textOpacity,
           }}
         >
           <div
@@ -159,8 +170,9 @@ export const Scene1Complaints: React.FC = () => {
             position: "absolute",
             left: "50%",
             top: "50%",
-            transform: "translate(-50%, -50%)",
+            transform: `translate(-50%, calc(-50% + ${textSlideUp}px))`,
             zIndex: 5,
+            opacity: textOpacity,
           }}
         >
           <GlowingBorder
