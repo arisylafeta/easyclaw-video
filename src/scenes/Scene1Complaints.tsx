@@ -81,7 +81,7 @@ export const Scene1Complaints: React.FC = () => {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const textSlideUp = interpolate(textEntranceProgress, [0, 1], [200, 0], {
+  const textSlideUp1 = interpolate(textEntranceProgress, [0, 1], [200, 0], {
     easing: Easing.out(Easing.cubic),
   });
   const textEntranceOpacity = textEntranceProgress;
@@ -111,7 +111,7 @@ export const Scene1Complaints: React.FC = () => {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const textSlideUp = interpolate(textAnimationProgress, [0, 1], [100, 0], {
+  const textSlideUp2 = interpolate(textAnimationProgress, [0, 1], [100, 0], {
     easing: Easing.out(Easing.cubic),
   });
   const textOpacity = textAnimationProgress;
@@ -142,8 +142,8 @@ export const Scene1Complaints: React.FC = () => {
           style={{
             position: "absolute",
             left: "50%",
-            top: "20%",
-            transform: `translate(-50%, calc(-50% + ${textSlideUp}px))`,
+            top: "30%",
+            transform: `translate(-50%, calc(-50% + ${textSlideUp2}px))`,
             zIndex: 6,
             opacity: textOpacity,
           }}
@@ -170,43 +170,33 @@ export const Scene1Complaints: React.FC = () => {
             position: "absolute",
             left: "50%",
             top: "50%",
-            transform: `translate(-50%, calc(-50% + ${textSlideUp}px))`,
+            transform: `translate(-50%, calc(-50% + ${textSlideUp2}px))`,
             zIndex: 5,
             opacity: textOpacity,
           }}
         >
-          <GlowingBorder
-            width={BUTTON_BORDER_CONFIG.width}
-            height={BUTTON_BORDER_CONFIG.height}
-            borderRadius={BUTTON_BORDER_CONFIG.borderRadius}
-            glowOpacity={BUTTON_BORDER_CONFIG.glowOpacity}
-            glowSpread={BUTTON_BORDER_CONFIG.glowSpread * glowPulse}
-            pulse={false}
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "#0a0a0a",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            {/* Dark background inside the border */}
-            <div
+            {/* "EasyClaw" text - inside the border */}
+            <span
               style={{
-                width: "100%",
-                height: "100%",
-                backgroundColor: "#0a0a0a",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                fontSize: 72,
+                fontWeight: 600,
+                color: COLORS.accentOrange,
+                fontFamily: "ClashDisplay, Inter, system-ui, sans-serif",
               }}
             >
-              {/* "EasyClaw" text - inside the border */}
-              <span
-                style={{
-                  fontSize: 72,
-                  fontWeight: 600,
-                  color: COLORS.accentOrange,
-                  fontFamily: "ClashDisplay, Inter, system-ui, sans-serif",
-                }}
-              >
-                EasyClaw
-              </span>
-            </div>
-          </GlowingBorder>
+              EasyClaw
+            </span>
+          </div>
         </div>
       )}
 
@@ -313,7 +303,7 @@ export const Scene1Complaints: React.FC = () => {
             color: COLORS.textWhite,
             textAlign: "center",
             whiteSpace: "nowrap",
-            transform: `translateY(${textSlideUp}px) scale(${screenshotScale})`,
+            transform: `translateY(${textSlideUp1}px) scale(${screenshotScale})`,
             transformOrigin: "center top",
             opacity: textEntranceOpacity,
           }}
@@ -327,7 +317,7 @@ export const Scene1Complaints: React.FC = () => {
             height: 3,
             backgroundColor: COLORS.accentOrange,
             marginTop: 16 * screenshotScale,
-            transform: `translateY(${textSlideUp}px) scale(${screenshotScale})`,
+            transform: `translateY(${textSlideUp1}px) scale(${screenshotScale})`,
             transformOrigin: "center top",
             opacity: textEntranceOpacity,
           }}
