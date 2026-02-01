@@ -126,7 +126,33 @@ export const Scene1Complaints: React.FC = () => {
         <GridBackground color={COLORS.grid} size="100px" showBlobs />
       )}
 
-      {/* Text and glowing border container - appears after morph completes */}
+      {/* "We introduce You" text - in top 40% of screen, 3x bigger */}
+      {showContainer && (
+        <div
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "20%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 6,
+          }}
+        >
+          <div
+            style={{
+              fontSize: 192,
+              fontWeight: 600,
+              color: COLORS.textWhite,
+              fontFamily: "Inter, system-ui, sans-serif",
+              textAlign: "center",
+              whiteSpace: "nowrap",
+            }}
+          >
+            We introduce You
+          </div>
+        </div>
+      )}
+
+      {/* Glowing border with EasyClaw - dead center */}
       {showContainer && (
         <div
           style={{
@@ -135,25 +161,8 @@ export const Scene1Complaints: React.FC = () => {
             top: "50%",
             transform: "translate(-50%, -50%)",
             zIndex: 5,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
           }}
         >
-          {/* "We introduce You" text - above the border, bigger and higher */}
-          <div
-            style={{
-              fontSize: 64,
-              fontWeight: 600,
-              color: COLORS.textWhite,
-              fontFamily: "Inter, system-ui, sans-serif",
-              textAlign: "center",
-              marginBottom: 40,
-            }}
-          >
-            We introduce You
-          </div>
-
           <GlowingBorder
             width={BUTTON_BORDER_CONFIG.width}
             height={BUTTON_BORDER_CONFIG.height}
