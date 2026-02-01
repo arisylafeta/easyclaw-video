@@ -136,7 +136,7 @@ export const Scene1Complaints: React.FC = () => {
         <GridBackground color={COLORS.grid} size="100px" showBlobs />
       )}
 
-      {/* "The easiest setup for" text - in top 40% of screen, 3x bigger */}
+      {/* "We introduce You" text - in top 40% of screen, 3x bigger */}
       {showContainer && (
         <div
           style={{
@@ -158,7 +158,7 @@ export const Scene1Complaints: React.FC = () => {
               whiteSpace: "nowrap",
             }}
           >
-            The easiest setup for
+            We introduce You
           </div>
         </div>
       )}
@@ -185,7 +185,7 @@ export const Scene1Complaints: React.FC = () => {
               alignItems: "center",
             }}
           >
-            {/* "OpenClaw" text - inside the border */}
+            {/* "EasyClaw" text - inside the border */}
             <span
               style={{
                 fontSize: 72,
@@ -194,7 +194,7 @@ export const Scene1Complaints: React.FC = () => {
                 fontFamily: "ClashDisplay, Inter, system-ui, sans-serif",
               }}
             >
-              OpenClaw
+              EasyClaw
             </span>
           </div>
         </div>
