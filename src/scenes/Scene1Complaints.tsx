@@ -194,6 +194,29 @@ export const Scene1Complaints: React.FC = () => {
         }}
       />
 
+      {/* "You are not alone" text - centered in upper 40% */}
+      <div
+        style={{
+          position: "absolute",
+          top: "20%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          zIndex: 10,
+        }}
+      >
+        <span
+          style={{
+            fontSize: 120,
+            fontWeight: 800,
+            color: COLORS.textWhite,
+            textAlign: "center",
+            display: "block",
+            textShadow: `0 0 40px rgba(249, 115, 22, 0.6)`,
+          }}
+        >
+          You are not alone
+        </span>
+      </div>
 
     </div>
   );
