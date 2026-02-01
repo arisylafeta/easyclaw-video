@@ -93,8 +93,10 @@ export const Scene1Complaints: React.FC = () => {
   // Glow pulse
   const glowPulse = 1 + Math.sin(frame * 0.1) * 0.1;
 
-  // After transition starts (frame >= 120), show grid background
-  const showGridBackground = frame >= 120;
+  // Grid background appears when morph starts (frame >= 90)
+  const showGridBackground = frame >= 90;
+  // Container with glowing border appears after morph completes (frame >= 120)
+  const showContainer = frame >= 120;
 
   return (
     <div
@@ -111,13 +113,13 @@ export const Scene1Complaints: React.FC = () => {
         position: "relative",
       }}
     >
-      {/* Grid background with blobs - appears after transition */}
+      {/* Grid background with blobs - appears when morph starts */}
       {showGridBackground && (
         <GridBackground color={COLORS.grid} size="100px" showBlobs />
       )}
 
-      {/* Dark background container with glowing border - appears after transition */}
-      {showGridBackground && (
+      {/* Dark background container with glowing border - appears after morph completes */}
+      {showContainer && (
         <div
           style={{
             position: "absolute",
