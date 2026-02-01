@@ -55,10 +55,10 @@ export const Scene1Complaints: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
-  // Button dimensions morph from full screen to button size
-  const buttonWidth = interpolate(morphProgress, [0, 1], [1920, 280]);
-  const buttonHeight = interpolate(morphProgress, [0, 1], [1080, 80]);
-  const borderRadius = interpolate(morphProgress, [0, 1], [0, 50]);
+  // Button dimensions morph from full screen to 2x button size (560x160)
+  const buttonWidth = interpolate(morphProgress, [0, 1], [1920, BUTTON_BORDER_CONFIG.width]);
+  const buttonHeight = interpolate(morphProgress, [0, 1], [1080, BUTTON_BORDER_CONFIG.height]);
+  const borderRadius = interpolate(morphProgress, [0, 1], [0, BUTTON_BORDER_CONFIG.borderRadius]);
 
   // Border glow
   const glowOpacity = interpolate(morphProgress, [0, 1], [0.1, 0.6]);
