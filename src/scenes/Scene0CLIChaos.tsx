@@ -234,7 +234,7 @@ export const Scene0CLIChaos: React.FC = () => {
           left: "-200px",
           top: "50%",
           transform: "translateY(-50%)",
-          background: "radial-gradient(circle, rgba(34, 197, 94, 0.08) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(34, 197, 94, 0.2) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -247,7 +247,7 @@ export const Scene0CLIChaos: React.FC = () => {
           height: "900px",
           right: "-300px",
           top: "30%",
-          background: "radial-gradient(circle, rgba(239, 68, 68, 0.06) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(239, 68, 68, 0.2) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
