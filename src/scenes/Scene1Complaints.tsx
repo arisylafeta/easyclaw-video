@@ -33,7 +33,7 @@ const SCREENSHOT_CONFIGS = [
   { x: 100, y: 650, rotation: 2, scale: 0.86, delay: 4, screenshotIndex: 4 },
   { x: 600, y: 680, rotation: -4, scale: 0.9, delay: 12, screenshotIndex: 5 },
   { x: 1100, y: 650, rotation: 1, scale: 0.84, delay: 20, screenshotIndex: 6 },
-  { x: 300, y: 850, rotation: -3, scale: 0.88, delay: 6, screenshotIndex: 7 },
+  { x: -100, y: 900, rotation: -2, scale: 0.88, delay: 6, screenshotIndex: 9 },
   { x: 1000, y: 880, rotation: 2, scale: 0.85, delay: 14, screenshotIndex: 8 },
 ];
 
