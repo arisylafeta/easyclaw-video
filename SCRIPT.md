@@ -1,18 +1,50 @@
 # EASYCLAW DEMO VIDEO - REVISED SCRIPT
-## Runtime: 30 seconds | Style: Fast-paced, High Energy, Social Media Optimized
+## Runtime: 35 seconds | Style: Fast-paced, High Energy, Social Media Optimized
 ## Inspired by: LicenseSeat (Video 1) + GPU.NET (Video 2)
 
 ---
 
-## SCENE 1: THE PROBLEM - COMPLAINT CASCADE (0:00 - 0:04)
+## SCENE 0: THE PROBLEM - CLI CHAOS (0:00 - 0:05)
+**Duration: 5 seconds**
+
+**Visual:**
+- Pure black background with subtle orange grid
+- **Split screen layout:**
+  - **Left side (50%):** Terminal window with CLI chaos
+    - Rapidly scrolling error messages and commands
+    - Commands like `$ npm install`, `$ docker-compose up`
+    - Errors: "permission denied", "dependency conflict", "container failed"
+    - Red/green text with glitch effects
+    - Blinking cursor
+  - **Right side (50%):** Problem text
+    - Large headline: "Tired of handling all this infrastructure?"
+    - Subtext: "You're not alone."
+    - Orange accent line below
+
+**Animation Sequence:**
+- **0.0-1.0s:** CLI lines start scrolling rapidly from top
+- **1.0-2.0s:** Headline text fades in with slide up
+- **2.0-3.0s:** Subtext fades in
+- **3.0-4.0s:** Orange accent line expands
+- **4.0-5.0s:** Exit transition - scene scales down and fades
+
+**Technical Specs:**
+- Terminal font: JetBrains Mono, 14px
+- Headline: 64px, font-weight: 700
+- Subtext: 32px, font-weight: 500
+- Colors: Dark bg (#0a0a0a), Success green (#22c55e), Error red (#ef4444), Accent orange (#f97316)
+
+**Audio:** Rapid typing sounds, error beeps building tension
+
+---
+
+## SCENE 1: THE COMPLAINT CASCADE (0:05 - 0:09)
 **Duration: 4 seconds**
 
 **Visual:**
-- Pure black background
-- **20+ screenshots cascade onto screen rapidly** (tweets, Reddit posts, GitHub issues)
+- Screenshots cascade onto screen rapidly (tweets, Reddit posts, GitHub issues)
 - All complaining about OpenClaw setup complexity
 - Screenshots drop with physics - **bam bam bam** - slightly overlapping
-- Each screenshot has **"OpenClaw" highlighted in red** (using text overlay or image processing)
 - Screenshots fill entire canvas within 2 seconds
 - Screenshots have slight rotation (-5° to +5°) for organic feel
 - Drop shadows on each screenshot for depth
@@ -21,11 +53,7 @@
 - **0.0-0.1s:** First screenshot drops from top, bounces slightly
 - **0.1-2.0s:** Screenshots cascade rapidly (one every 0.1s), overlapping, filling screen
 - **2.0-3.0s:** Hold on filled screen
-- **3.0-4.0s:** **WARP TRANSITION** - entire screen compresses and shrinks:
-  - Scale: 1.0 → 0.3
-  - Position: center → moves to reveal next scene
-  - Rotation: 0° → slight 3D tilt (perspective transform)
-  - Opacity: 1.0 → 0.0 (as it becomes the button)
+- **3.0-4.0s:** Exit transition - screenshots compress and shrink to center
 
 **Technical Specs:**
 - Screenshot size: ~200-300px width
@@ -37,96 +65,120 @@
 
 ---
 
-## SCENE 2: THE SOLUTION - ONE CLICK (0:04 - 0:08)
+## SCENE 2: THE SOLUTION - WE INTRODUCE EASYLAW (0:09 - 0:13)
 **Duration: 4 seconds**
 
 **Visual:**
-- Warm gradient background (borrow from Video 1): `#FFD54F` → `#FFB300`
-- Center screen: **White rounded card** (from Video 1 frame 4 style)
-  - Size: ~600px width, ~200px height
-  - Border-radius: 24px
-  - Box-shadow: `0 25px 80px rgba(0,0,0,0.2)`
-  - Background: `#FFFFFF`
-- Card contains text: **"Setup [OpenClaw] with just one click"**
-  - "Setup" and "with just one click" in dark text (#1F2937)
-  - "[OpenClaw]" in **white pill button** with red background (#DC2626)
-  - Typography: 48px, font-weight: 700
-  - Font: Inter or system-ui
+- Dark background with orange grid
+- Center: Large rounded button with orange border glow
+- **Phase 1:** Button contains "We introduce EasyClaw" (typing animation)
+- **Phase 2:** Text fades out, replaced with:
+  - "Setup" (white) + "and" (white) + "OpenClaw" (orange) + "in three clicks" (white)
+- Cursor appears and clicks the button
+- Flash effect on click
+- Explosion transition to next scene
 
 **Animation Sequence:**
-- **0.0-0.5s:** Card scales in from 0.8 → 1.0 with spring easing
-- **0.5-1.5s:** Text types in character by character (fast: 2-3 frames per char)
-- **1.5-2.5s:** Hold, subtle pulse on card
-- **2.5-3.0s:** **Cursor appears**, moves to hover over "[OpenClaw]" button
-- **3.0-3.2s:** **CLICK** - flash of white light from button
-- **3.2-4.0s:** **EXPLOSION TRANSITION** - screen explodes outward:
-  - Scale: 1.0 → 3.0
-  - Opacity: 1.0 → 0.0
-  - Particles burst outward (white/orange)
-  - Transition to next scene
+- **0.0-0.5s:** Button scales in from screenshots (0.3 → 1.0)
+- **0.5-1.5s:** "We introduce EasyClaw" types in character by character
+- **1.5-2.0s:** First text fades out, new text fades in
+- **2.0-2.5s:** "Setup and OpenClaw in three clicks" types in
+- **2.5-3.0s:** Cursor moves to button
+- **3.0-3.2s:** CLICK - flash of white/orange light
+- **3.2-4.0s:** EXPLOSION TRANSITION - screen explodes outward
 
 **Technical Specs:**
-- Card shadow: `0 25px 80px rgba(0,0,0,0.2)`
-- Spring config: `{ damping: 15, stiffness: 100 }`
+- Button: 500px min-width, 24px border-radius, 3px orange border
+- Glow: `0 0 60px rgba(249, 115, 22, 0.4)`
+- Text: 48px, font-weight: 700
 - Click flash: white overlay with opacity 0.8 → 0.0 over 10 frames
-- Explosion: radial blur + scale
+- Explosion: radial blur + scale 1.0 → 3.0
 
 **Audio:** Satisfying click sound, then explosive "whoosh"
 
 ---
 
-## SCENE 3: FEATURE EXPLOSION (0:08 - 0:14)
+## SCENE 3: THREE STEPS ONBOARDING (0:13 - 0:19)
 **Duration: 6 seconds**
 
 **Visual:**
-- Background: Pure black `#0a0a0a`
-- **Main Feature Showcase (first 3 seconds):**
-  - Large 3D card floating center (borrow from Video 2's isometric style)
-  - Card shows: **"Clear your inbox"** with envelope icon
-  - Card has depth, slight rotation (isometric view)
-  - Card glows with orange accent (#f97316)
-  - Text animates: "Clear" in orange, "your inbox" in white
-  
-- **Grid Transition (3-6 seconds):**
-  - Main card shrinks and moves to top-left
-  - **3x2 grid of feature cards** appears (borrow from Video 2 frame 9)
-  - Cards float in 3D space with depth
-  - Each card shows different capability:
-    - "Manage calendar" 📅
-    - "Book flights" ✈️
-    - "Answer emails" ✉️
-    - "Control home" 🏠
-    - "Research" 🔍
-    - "Write code" 💻
-  - Cards have subtle floating animation (sine wave, different phases)
+- Dark background with subtle grid
+- Title: "Get started in three clicks"
+- **Three step cards** in horizontal row:
+  1. **Step 01:** "Create Telegram Bot" - Bot icon (🤖) - Blue accent
+  2. **Step 02:** "We provision Your Instance" - Lightning icon (⚡) - Orange accent
+  3. **Step 03:** "Pair and go" - Rocket icon (🚀) - Green accent
+- Each card shows: step number, icon, title, description
+- Checkmark appears when step completes
+- Progress indicator at bottom (3 lines)
 
 **Animation Sequence:**
-- **0.0-0.5s:** Main feature card scales in from explosion (3.0 → 1.0)
-- **0.5-2.0s:** Main card floats, text highlights animate
-- **2.0-3.0s:** Main card begins shrinking and moving to grid position
-- **3.0-4.0s:** Grid cards fade in with stagger (0.1s delay each)
-- **4.0-6.0s:** All cards float with gentle motion, subtle glow pulses
+- **0.0-0.5s:** Title fades in with slide up
+- **0.5-1.5s:** Step 1 card enters from right with spring
+- **1.5-2.5s:** Step 2 card enters
+- **2.5-3.5s:** Step 3 card enters
+- **1.5s:** Step 1 checkmark appears (completes)
+- **2.5s:** Step 2 checkmark appears
+- **3.5s:** Step 3 checkmark appears
+- **4.0-5.0s:** All cards float gently
+- **5.0-6.0s:** Exit transition - scale up and fade
 
 **Technical Specs:**
-- Main card size: 500px width
-- Grid cards: 280px width each
-- Grid gap: 40px
-- 3D perspective: `perspective: 1000px`
-- Card rotation: `rotateX(10deg) rotateY(-10deg)`
-- Floating animation: `translateY(sin(frame * 0.05) * 10px)`
-- Glow: `box-shadow: 0 0 60px rgba(249, 115, 22, 0.4)`
+- Cards: 320px width, dark bg with colored border
+- Icons: 64px with glow
+- Checkmarks: 40px circles with scale animation
+- Progress bars: 60px × 4px lines
+- Stagger delay: 1 second between cards
 
-**Audio:** Upbeat electronic beat, subtle "pop" for each card appearance
+**Audio:** Upbeat electronic beat, "pop" for each card, "ding" for checkmarks
 
 ---
 
-## SCENE 4: CHANNELS - CONNECT WITH (0:14 - 0:20)
+## SCENE 4: FEATURE EXPLOSION (0:19 - 0:25)
 **Duration: 6 seconds**
+
+**Visual:**
+- Background: Pure black with orange grid
+- Central glow effect
+- Title: "Everything you need, nothing you don't"
+- **2x2 grid of feature cards** exploding from center:
+  1. **Browser-based desktop** (🌐) - Access from anywhere
+  2. **Full OpenClaw Power** (⚡) - All capabilities unlocked
+  3. **Your Keys, Your Data** (🔐) - Complete privacy control
+  4. **Always On** (🔋) - 24/7 availability
+- Cards have 3D depth, floating animation
+- Each card has colored glow matching its importance
+
+**Animation Sequence:**
+- **0.0-0.5s:** Central glow expands
+- **0.5-1.0s:** Title fades in
+- **0.5-1.5s:** Cards explode from center with stagger
+  - Card 1: from top-right
+  - Card 2: from bottom-right
+  - Card 3: from bottom-left
+  - Card 4: from top-left
+- **1.5-5.0s:** Cards float with gentle sine wave motion
+- **5.0-6.0s:** Exit transition - scale down and fade
+
+**Technical Specs:**
+- Cards: 400px width, dark bg with colored border
+- Icons: 48px with drop-shadow glow
+- Explosion distance: 300px from center
+- Floating: `translateY(sin(frame * 0.05) * 8px)`
+- Glow: `0 0 30px {color}30`
+- Grid: 50px orange lines at 10% opacity
+
+**Audio:** Explosive "whoosh", then ambient electronic hum
+
+---
+
+## SCENE 5: CHANNELS - CONNECT WITH (0:25 - 0:30)
+**Duration: 5 seconds**
 
 **Visual:**
 - Dark background continues
 - Text: **"Connect with"** in white, 64px, center-top
-- Below: **Platform logos cycle rapidly** (borrow from Video 1 frames 12-15)
+- Below: **Platform logos cycle rapidly**
   - WhatsApp (green)
   - Telegram (blue)
   - Discord (purple)
@@ -142,58 +194,19 @@
 - **2.5-3.5s:** Transition to Discord
 - **3.5-4.5s:** Transition to iMessage
 - **4.5-5.0s:** Hold on iMessage
-- **5.0-6.0s:** **PARTICLE DISSOLVE TRANSITION** - logo dissolves into particles that form next scene
 
 **Technical Specs:**
 - Platform text: 72px, font-weight: 700
 - Logo size: 80px
 - Glow effect: `drop-shadow(0 0 30px {brandColor})`
 - Transition: `translateX(-100px)` + opacity fade
-- Particle dissolve: 50 particles burst outward, fade out
 
 **Audio:** Whoosh sound for each transition, notification sounds for each platform
 
 ---
 
-## SCENE 5: SECURITY (0:20 - 0:26)
-**Duration: 6 seconds**
-
-**Visual:**
-- Background: Dark with subtle grid (borrow from Video 2 frames 11-14)
-- **Particle shield formation** (similar to Video 2 style)
-  - 60+ particles start scattered
-  - Particles move to form shield shape
-  - Particles are orange (#f97316) and white
-- **Security text appears line by line:**
-  - "Your data stays yours"
-  - "Bank-grade encryption"
-  - "Private by design"
-- Each line has checkmark icon (✓) in green
-- Shield pulses with glow when complete
-
-**Animation Sequence:**
-- **0.0-1.0s:** Particles scatter, begin moving to shield positions
-- **1.0-3.0s:** Particles form shield shape (spring easing)
-- **2.0-2.5s:** First text line fades in with slide
-- **2.5-3.0s:** Second text line
-- **3.0-3.5s:** Third text line
-- **3.5-5.0s:** Shield pulses with glow, particles shimmer
-- **5.0-6.0s:** **ZOOM BLUR TRANSITION** - camera zooms through shield to next scene
-
-**Technical Specs:**
-- Particles: 4-6px circles
-- Shield formation: `spring({ damping: 12, stiffness: 80 })`
-- Text: 36px, font-weight: 600
-- Checkmark: 24px, color #22C55E
-- Glow pulse: `box-shadow: 0 0 ${40 + pulse}px rgba(249, 115, 22, 0.6)`
-- Zoom blur: `scale(1.0 → 3.0)` + `blur(0 → 20px)`
-
-**Audio:** Ethereal "secure" sound, particles chiming as they form shield
-
----
-
-## SCENE 6: CTA - WAITLIST (0:26 - 0:30)
-**Duration: 4 seconds**
+## SCENE 6: CTA - WAITLIST (0:30 - 0:35)
+**Duration: 5 seconds**
 
 **Visual:**
 - Background: Warm gradient returns `#FFD54F` → `#FFB300`
@@ -212,13 +225,13 @@
   - Cursor hovers over it
 
 **Animation Sequence:**
-- **0.0-0.5s:** Zoom blur resolves to clean scene
+- **0.0-0.5s:** Scene resolves from previous transition
 - **0.5-1.0s:** Logo scales in with spring
 - **1.0-1.5s:** Main text types in
 - **1.5-2.0s:** URL fades in
 - **2.0-2.5s:** CTA button scales up with bounce
-- **2.5-3.5s:** Button pulses invitingly, cursor hovers
-- **3.5-4.0s:** Hold on final frame
+- **2.5-4.5s:** Button pulses invitingly, cursor hovers
+- **4.5-5.0s:** Hold on final frame
 
 **Technical Specs:**
 - Logo glow: `filter: drop-shadow(0 0 ${30 + pulse}px rgba(249, 115, 22, 0.5))`
@@ -232,11 +245,12 @@
 
 ## TRANSITION SUMMARY
 
-1. **Scene 1→2:** Screen warp/compress into button
-2. **Scene 2→3:** Explosion with particles
-3. **Scene 3→4:** Main card shrinks to grid
-4. **Scene 4→5:** Particle dissolve
-5. **Scene 5→6:** Zoom blur through shield
+1. **Scene 0→1:** Scale down and fade
+2. **Scene 1→2:** Screenshots compress into button
+3. **Scene 2→3:** Explosion with particles
+4. **Scene 3→4:** Scale up and fade
+5. **Scene 4→5:** Scale down and fade
+6. **Scene 5→6:** Clean cut to warm gradient
 
 ---
 
@@ -247,22 +261,25 @@
 - **Card White:** `#FFFFFF`
 - **Text Primary:** `#1F2937` (dark gray)
 - **Text White:** `#FFFFFF`
+- **Text Secondary:** `#a0a0a0`
 - **Accent Orange:** `#f97316`
-- **Highlight Red:** `#DC2626` (for OpenClaw)
 - **Success Green:** `#22C55E`
-- **WhatsApp Green:** `#25D366`
+- **Error Red:** `#ef4444`
 - **Telegram Blue:** `#0088CC`
 - **Discord Purple:** `#5865F2`
+- **WhatsApp Green:** `#25D366`
+- **iMessage Blue:** `#007aff`
 
 ---
 
 ## TYPOGRAPHY
 
 - **Primary Font:** Inter, system-ui, sans-serif
+- **Terminal Font:** JetBrains Mono, monospace
 - **Hero Text:** 48-72px, font-weight: 700
 - **Body Text:** 24-36px, font-weight: 600
 - **Card Text:** 18-24px, font-weight: 500
-- **Code Font:** JetBrains Mono (if needed)
+- **Code Font:** JetBrains Mono
 
 ---
 
@@ -275,3 +292,33 @@
 5. **3D Depth:** Cards have perspective and slight rotation
 6. **Glow effects:** Orange accent glows on interactive elements
 7. **Physics:** Screenshots drop with bounce, particles have momentum
+
+---
+
+## FILE STRUCTURE
+
+```
+src/
+├── Root.tsx                    # Main composition with scene timing
+├── scenes/
+│   ├── Scene0CLIChaos.tsx      # CLI chaos + problem text
+│   ├── Scene1Complaints.tsx    # Screenshots cascade
+│   ├── Scene2Solution.tsx      # "We introduce EasyClaw" button
+│   ├── Scene3Steps.tsx         # Three steps onboarding
+│   ├── Scene4Features.tsx      # Feature explosion (2x2 grid)
+│   ├── Scene4Channels.tsx      # Platform connections
+│   └── Scene6CTA.tsx           # Waitlist CTA
+```
+
+---
+
+## SCENE TIMING (FRAMES @ 30FPS)
+
+- Scene 0: 0-150 (5s)
+- Scene 1: 150-270 (4s)
+- Scene 2: 270-390 (4s)
+- Scene 3: 390-570 (6s)
+- Scene 4: 570-750 (6s)
+- Scene 5: 750-900 (5s)
+- Scene 6: 900-1050 (5s)
+- **Total: 35 seconds (1050 frames)**

@@ -1,20 +1,11 @@
 import React from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig, Easing, staticFile, Img } from "remotion";
-import { loadFont } from "@remotion/fonts";
 
 const COLORS = {
   bg: "#0a0a0a",
   textWhite: "#ffffff",
   accentOrange: "#f97316",
-  grid: "rgba(249, 115, 22, 0.1)",
 };
-
-// Load Clash Display font from local file
-const clashDisplayFont = loadFont({
-  family: "Clash Display",
-  url: staticFile("fonts/ClashDisplay-Semibold.otf"),
-  weight: "600",
-});
 
 // Screenshot filenames with their original dimensions
 const SCREENSHOTS = [
@@ -56,100 +47,128 @@ const SCREENSHOT_CONFIGS = [
   { x: 1400, y: 930, rotation: -2, scale: 0.81, delay: 17, screenshotIndex: 5 },
 ];
 
-// SCENE 1: SCREENSHOTS CASCADE (0:05 - 0:09)
-// Screenshots drop on top of the CLI chaos from Scene 0
 export const Scene1Complaints: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-
-  // Screenshots drop in (0-4 seconds = 0-120 frames)
-  // Then hold briefly before transition
   
-  // Exit transition (4-5s = 120-150 frames)
-  const exitProgress = interpolate(frame, [120, 150], [0, 1], {
+  // PHASE 1: Screenshots drop in (0-3 seconds = 0-90 frames)
+  // PHASE 2: Morph to button (3-4 seconds = 90-120 frames)
+  // PHASE 3: Button with text (4-8 seconds = 120-240 frames)
+  
+  // Morph progress: 0 = full screen, 1 = button size
+  const morphProgress = interpolate(frame, [90, 120], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
   
-  const exitScale = interpolate(exitProgress, [0, 1], [1, 0.3], {
-    easing: Easing.in(Easing.cubic),
+  // Button dimensions morph from full screen to button size
+  const buttonWidth = interpolate(morphProgress, [0, 1], [1920, 280]);
+  const buttonHeight = interpolate(morphProgress, [0, 1], [1080, 80]);
+  const borderRadius = interpolate(morphProgress, [0, 1], [0, 50]);
+  
+  // Border glow
+  const glowOpacity = interpolate(morphProgress, [0, 1], [0.1, 0.6]);
+  const glowSpread = interpolate(morphProgress, [0, 1], [10, 60]);
+  
+  // Screenshots scale with the container
+  const screenshotScale = interpolate(morphProgress, [0, 1], [1, 0.15]);
+  const screenshotOpacity = interpolate(morphProgress, [0.5, 1], [1, 0]);
+  
+  // Text appears after morph (4s = 120 frames)
+  const textProgress = interpolate(frame, [120, 135], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
   });
-  const exitOpacity = interpolate(exitProgress, [0, 0.7], [1, 0]);
-
+  
+  // OpenClaw text types (4-5s = 120-150 frames)
+  const buttonTextProgress = Math.max(0, frame - 120);
+  const fullButtonText = "OpenClaw";
+  const charsToShow = Math.floor(buttonTextProgress / 2);
+  const displayButtonText = fullButtonText.slice(0, Math.min(charsToShow, fullButtonText.length));
+  
+  // Cursor and click (6.5-7s = 195-210 frames)
+  const cursorProgress = interpolate(frame, [195, 210], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  
+  // Click flash
+  const flashOpacity = interpolate(frame, [210, 216], [0.8, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  
+  // Explosion to next scene (7-8s = 210-240 frames)
+  const explosionProgress = interpolate(frame, [210, 240], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const explosionScale = interpolate(explosionProgress, [0, 1], [1, 3], {
+    easing: Easing.out(Easing.exp),
+  });
+  const explosionOpacity = interpolate(explosionProgress, [0, 0.7], [1, 0], {
+    extrapolateRight: "clamp",
+  });
+  
+  // Glow pulse
+  const glowPulse = 1 + Math.sin(frame * 0.1) * 0.1;
+  
   return (
-    <>
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          backgroundColor: COLORS.bg,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          fontFamily: "'Clash Display', Inter, system-ui, sans-serif",
-          transform: `scale(${exitScale})`,
-          opacity: exitOpacity,
-          position: "relative",
-        }}
-      >
-      {/* Grid Background */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage: `
-            linear-gradient(${COLORS.grid} 1px, transparent 1px),
-            linear-gradient(90deg, ${COLORS.grid} 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
-        }}
-      />
-      
-      {/* Screenshots layer - fills entire screen */}
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        backgroundColor: COLORS.bg,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontFamily: "Inter, system-ui, sans-serif",
+        transform: `scale(${explosionScale})`,
+        opacity: explosionOpacity,
+        position: "relative",
+      }}
+    >
+      {/* Screenshots layer */}
       <div
         style={{
           position: "absolute",
-          width: "100%",
-          height: "100%",
+          width: buttonWidth,
+          height: buttonHeight,
           overflow: "hidden",
+          borderRadius: borderRadius,
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          clipPath: `inset(0px round ${borderRadius}px)`,
         }}
       >
         {SCREENSHOT_CONFIGS.map((config, i) => {
           const screenshot = SCREENSHOTS[config.screenshotIndex];
           const startFrame = config.delay;
           const endFrame = config.delay + 12;
-
+          
           const dropProgress = interpolate(frame, [startFrame, endFrame], [0, 1], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
           });
-
+          
           const animScale = interpolate(dropProgress, [0, 1], [0.5, 1]);
           const opacity = dropProgress;
-          const finalScale = animScale * config.scale;
+          const finalScale = animScale * config.scale * screenshotScale;
           
-          // Bounce effect
-          const bounceY = interpolate(
-            dropProgress,
-            [0, 0.6, 0.8, 1],
-            [-100, 0, -10, 0],
-            { easing: Easing.out(Easing.cubic) }
-          );
-
           return (
             <div
               key={i}
               style={{
                 position: "absolute",
                 left: config.x,
-                top: config.y + bounceY,
+                top: config.y,
                 width: screenshot.width,
                 height: screenshot.height,
                 transform: `rotate(${config.rotation}deg) scale(${finalScale})`,
-                opacity: opacity,
+                opacity: opacity * screenshotOpacity,
                 borderRadius: "8px",
                 overflow: "hidden",
-                boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
               }}
             >
               <Img
@@ -164,7 +183,139 @@ export const Scene1Complaints: React.FC = () => {
           );
         })}
       </div>
+      
+      {/* Button border layer */}
+      <div
+        style={{
+          position: "absolute",
+          width: buttonWidth,
+          height: buttonHeight,
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          border: `${3}px solid ${COLORS.accentOrange}`,
+          borderRadius: borderRadius,
+          boxShadow: `
+            0 0 ${glowSpread * glowPulse}px rgba(249, 115, 22, ${glowOpacity}),
+            0 0 ${glowSpread * 2 * glowPulse}px rgba(249, 115, 22, ${glowOpacity * 0.5})
+          `,
+          pointerEvents: "none",
+          zIndex: 5,
+        }}
+      />
+      
+      {/* Text and button content layer */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 24,
+          position: "relative",
+          zIndex: 10,
+        }}
+      >
+        {/* "Setup" text */}
+        <span
+          style={{
+            fontSize: 64,
+            fontWeight: 700,
+            color: COLORS.textWhite,
+            opacity: textProgress,
+            transform: `translateX(${(1 - textProgress) * -50}px)`,
+            textShadow: `0 0 ${30 * glowPulse}px rgba(249, 115, 22, 0.5)`,
+          }}
+        >
+          Setup
+        </span>
+        
+        {/* Button content area */}
+        <div
+          style={{
+            width: buttonWidth,
+            height: buttonHeight,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+          }}
+        >
+          {/* OpenClaw text */}
+          <span
+            style={{
+              fontSize: 48,
+              fontWeight: 700,
+              color: COLORS.accentOrange,
+              letterSpacing: "0.02em",
+              textShadow: `0 0 ${20 * glowPulse}px rgba(249, 115, 22, 0.8)`,
+              zIndex: 20,
+            }}
+          >
+            {displayButtonText}
+          </span>
+          
+          {/* Typing cursor */}
+          {frame < 140 && (
+            <span
+              style={{
+                display: "inline-block",
+                width: 3,
+                height: "1em",
+                backgroundColor: COLORS.accentOrange,
+                marginLeft: 4,
+              }}
+            />
+          )}
+          
+          {/* Click flash */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              backgroundColor: "white",
+              opacity: flashOpacity,
+              pointerEvents: "none",
+              zIndex: 30,
+              borderRadius: borderRadius,
+            }}
+          />
+        </div>
+        
+        {/* "in one click" text */}
+        <span
+          style={{
+            fontSize: 64,
+            fontWeight: 700,
+            color: COLORS.accentOrange,
+            opacity: textProgress,
+            transform: `translateX(${(1 - textProgress) * 50}px)`,
+            textShadow: `
+              0 0 ${30 * glowPulse}px rgba(249, 115, 22, 0.8),
+              0 0 ${60 * glowPulse}px rgba(249, 115, 22, 0.4)
+            `,
+          }}
+        >
+          in one click
+        </span>
+      </div>
+      
+      {/* Cursor */}
+      {frame >= 195 && frame < 216 && (
+        <div
+          style={{
+            position: "absolute",
+            width: 24,
+            height: 24,
+            backgroundColor: "white",
+            borderRadius: "50%",
+            left: "50%",
+            top: "50%",
+            transform: `translate(-50%, -50%) translateX(${interpolate(cursorProgress, [0, 1], [200, 0])}px)`,
+            boxShadow: "0 2px 12px rgba(255,255,255,0.5)",
+            pointerEvents: "none",
+            zIndex: 100,
+          }}
+        />
+      )}
     </div>
-    </>
   );
 };
