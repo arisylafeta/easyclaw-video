@@ -43,7 +43,8 @@ export const Scene1Complaints: React.FC = () => {
 
   // PHASE 1: Screenshots drop in (0-3 seconds = 0-90 frames)
   // PHASE 2: Morph to button (3-4 seconds = 90-120 frames)
-  // PHASE 3: Button with text (4-8 seconds = 120-240 frames)
+  // PHASE 3: Button with text (4-7 seconds = 120-210 frames)
+  // PHASE 4: Click and explode (7-8 seconds = 210-240 frames)
 
   // Morph progress: 0 = full screen, 1 = button size
   const morphProgress = interpolate(frame, [90, 120], [0, 1], {
