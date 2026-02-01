@@ -116,6 +116,38 @@ export const Scene1Complaints: React.FC = () => {
   });
   const textOpacity = textAnimationProgress;
 
+  // "We introduce You" fade out (150-180 frames)
+  const weIntroduceFadeOutProgress = interpolate(frame, [150, 180], [1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  // "Open" text fade in (180-210 frames)
+  const openFadeInProgress = interpolate(frame, [180, 210], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const openSlideUp = interpolate(openFadeInProgress, [0, 1], [50, 0], {
+    easing: Easing.out(Easing.cubic),
+  });
+  const openOpacity = openFadeInProgress;
+
+  // "Easy" fade out in "EasyClaw" (150-180 frames)
+  const easyFadeOutProgress = interpolate(frame, [150, 180], [1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  // "Setup [] in one click" fade in (180-210 frames)
+  const setupFadeInProgress = interpolate(frame, [180, 210], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const setupSlideUp = interpolate(setupFadeInProgress, [0, 1], [50, 0], {
+    easing: Easing.out(Easing.cubic),
+  });
+  const setupOpacity = setupFadeInProgress;
+
   return (
     <div
       style={{
@@ -136,16 +168,16 @@ export const Scene1Complaints: React.FC = () => {
         <GridBackground color={COLORS.grid} size="100px" showBlobs />
       )}
 
-      {/* "We introduce You" text - in top 40% of screen, 3x bigger */}
-      {showContainer && (
+      {/* "We introduce You" text - fades out after appearing */}
+      {showContainer && weIntroduceFadeOutProgress > 0 && (
         <div
           style={{
             position: "absolute",
             left: "50%",
-            top: "30%",
+            top: "20%",
             transform: `translate(-50%, calc(-50% + ${textSlideUp2}px))`,
             zIndex: 6,
-            opacity: textOpacity,
+            opacity: textOpacity * weIntroduceFadeOutProgress,
           }}
         >
           <div
@@ -163,29 +195,62 @@ export const Scene1Complaints: React.FC = () => {
         </div>
       )}
 
-      {/* Glowing border with EasyClaw - dead center */}
+      {/* "Open" text - fades in to replace "We introduce You" */}
+      {showContainer && openOpacity > 0 && (
+        <div
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "20%",
+            transform: `translate(-50%, calc(-50% + ${openSlideUp}px))`,
+            zIndex: 6,
+            opacity: openOpacity,
+          }}
+        >
+          <div
+            style={{
+              fontSize: 140,
+              fontWeight: 600,
+              color: COLORS.textWhite,
+              fontFamily: "Inter, system-ui, sans-serif",
+              textAlign: "center",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Open
+          </div>
+        </div>
+      )}
+
+      {/* Glowing border with EasyClaw/OpenClaw - center of screen */}
       {showContainer && (
         <div
           style={{
             position: "absolute",
             left: "50%",
             top: "50%",
-            transform: `translate(-50%, calc(-50% + ${textSlideUp2}px))`,
+            transform: `translate(-50%, -50%)`,
             zIndex: 5,
             opacity: textOpacity,
           }}
         >
           <div
             style={{
-              width: "100%",
-              height: "100%",
+              width: BUTTON_BORDER_CONFIG.width,
+              height: BUTTON_BORDER_CONFIG.height,
               backgroundColor: "#0a0a0a",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              border: `3px solid ${COLORS.accentOrange}`,
+              borderRadius: BUTTON_BORDER_CONFIG.borderRadius,
+              boxShadow: `
+                0 0 ${glowSpread * glowPulse}px rgba(249, 115, 22, ${glowOpacity}),
+                0 0 ${glowSpread * 2 * glowPulse}px rgba(249, 115, 22, ${glowOpacity * 0.5})
+              `,
             }}
           >
-            {/* "EasyClaw" text - inside the border */}
+            {/* "EasyClaw" text - inside the border with "Easy" fading out */}
             <span
               style={{
                 fontSize: 72,
@@ -194,8 +259,36 @@ export const Scene1Complaints: React.FC = () => {
                 fontFamily: "ClashDisplay, Inter, system-ui, sans-serif",
               }}
             >
-              EasyClaw
+              <span style={{ opacity: easyFadeOutProgress }}>Easy</span>
+              <span>Claw</span>
             </span>
+          </div>
+        </div>
+      )}
+
+      {/* "Setup [] in one click" text - below the glowing border, vertically centered in lower half */}
+      {showContainer && setupOpacity > 0 && (
+        <div
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "75%",
+            transform: `translate(-50%, calc(-50% + ${setupSlideUp}px))`,
+            zIndex: 6,
+            opacity: setupOpacity,
+          }}
+        >
+          <div
+            style={{
+              fontSize: 80,
+              fontWeight: 600,
+              color: COLORS.textWhite,
+              fontFamily: "Inter, system-ui, sans-serif",
+              textAlign: "center",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Setup [] in one click
           </div>
         </div>
       )}
