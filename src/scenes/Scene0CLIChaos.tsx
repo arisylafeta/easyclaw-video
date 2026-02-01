@@ -171,7 +171,7 @@ export const Scene0CLIChaos: React.FC = () => {
         {/* Main headline */}
         <div
           style={{
-            fontSize: "64px",
+            fontSize: "96px",
             fontWeight: 700,
             color: COLORS.text,
             lineHeight: 1.2,
