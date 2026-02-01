@@ -54,8 +54,8 @@ export const Scene1Complaints: React.FC = () => {
 
   // PHASE 1: Screenshots drop in (0-3 seconds = 0-90 frames)
   // PHASE 2: Morph to button (3-4 seconds = 90-120 frames)
-  // PHASE 3: Button with text (4-7 seconds = 120-210 frames)
-  // PHASE 4: Click and explode (7-8 seconds = 210-240 frames)
+  // PHASE 3: Button with text (4-10 seconds = 120-300 frames)
+  // PHASE 4: Click and explode (10-11 seconds = 300-330 frames)
 
   // Morph progress: 0 = full screen, 1 = button size
   const morphProgress = interpolate(frame, [90, 120], [0, 1], {
@@ -86,8 +86,8 @@ export const Scene1Complaints: React.FC = () => {
   });
   const textEntranceOpacity = textEntranceProgress;
 
-  // Explosion to next scene (7-8s = 210-240 frames)
-  const explosionProgress = interpolate(frame, [210, 240], [0, 1], {
+  // Explosion to next scene (10-11s = 300-330 frames)
+  const explosionProgress = interpolate(frame, [300, 330], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -273,7 +273,8 @@ export const Scene1Complaints: React.FC = () => {
                 fontFamily: "ClashDisplay, Inter, system-ui, sans-serif",
               }}
             >
-              OpenClaw
+              <span>Open</span>
+              <span>Claw</span>
             </span>
           </div>
         </div>
