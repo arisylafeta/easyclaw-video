@@ -2,6 +2,14 @@ import React from "react";
 import { interpolate, useCurrentFrame, useVideoConfig, Easing, staticFile, Img } from "remotion";
 import { GlowingBorder, BUTTON_BORDER_CONFIG } from "../components/GlowingBorder";
 import { GridBackground } from "../components/GridBackground";
+import { loadFont } from "@remotion/fonts";
+
+// Load ClashDisplay font
+loadFont({
+  family: "ClashDisplay",
+  url: staticFile("fonts/ClashDisplay-Semibold.otf"),
+  weight: "600",
+});
 
 const COLORS = {
   bg: "#0a0a0a",
@@ -127,8 +135,25 @@ export const Scene1Complaints: React.FC = () => {
             top: "50%",
             transform: "translate(-50%, -50%)",
             zIndex: 5,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 24,
           }}
         >
+          {/* "We introduce You" text - above the border */}
+          <div
+            style={{
+              fontSize: 48,
+              fontWeight: 600,
+              color: COLORS.textWhite,
+              fontFamily: "Inter, system-ui, sans-serif",
+              textAlign: "center",
+            }}
+          >
+            We introduce You
+          </div>
+
           <GlowingBorder
             width={BUTTON_BORDER_CONFIG.width}
             height={BUTTON_BORDER_CONFIG.height}
@@ -143,8 +168,23 @@ export const Scene1Complaints: React.FC = () => {
                 width: "100%",
                 height: "100%",
                 backgroundColor: "#0a0a0a",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
-            />
+            >
+              {/* "EasyClaw" text - inside the border */}
+              <span
+                style={{
+                  fontSize: 72,
+                  fontWeight: 600,
+                  color: COLORS.accentOrange,
+                  fontFamily: "ClashDisplay, Inter, system-ui, sans-serif",
+                }}
+              >
+                EasyClaw
+              </span>
+            </div>
           </GlowingBorder>
         </div>
       )}
