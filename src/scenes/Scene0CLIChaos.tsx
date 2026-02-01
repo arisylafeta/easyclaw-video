@@ -65,6 +65,7 @@ export const Scene0CLIChaos: React.FC = () => {
         overflow: "hidden",
         transform: `scale(${exitScale})`,
         opacity: exitOpacity,
+        position: "relative",
       }}
     >
       {/* Left side: CLI Chaos */}
