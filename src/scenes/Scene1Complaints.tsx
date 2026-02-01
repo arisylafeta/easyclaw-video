@@ -1,10 +1,13 @@
 import React from "react";
-import { interpolate, spring, useCurrentFrame, useVideoConfig, Easing, staticFile, Img } from "remotion";
+import { interpolate, useCurrentFrame, useVideoConfig, Easing, staticFile, Img } from "remotion";
+import { GlowingBorder, BUTTON_BORDER_CONFIG } from "../components/GlowingBorder";
+import { GridBackground } from "../components/GridBackground";
 
 const COLORS = {
   bg: "#0a0a0a",
   textWhite: "#ffffff",
   accentOrange: "#f97316",
+  grid: "rgba(249, 115, 22, 0.1)",
 };
 
 // Screenshot filenames with their original dimensions
@@ -65,12 +68,6 @@ export const Scene1Complaints: React.FC = () => {
   const screenshotScale = interpolate(morphProgress, [0, 1], [1, 0.15]);
   const screenshotOpacity = interpolate(morphProgress, [0.5, 1], [1, 0]);
 
-  // Text appears after morph (4s = 120 frames)
-  const textProgress = interpolate(frame, [120, 135], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-
   // Text entrance animation (slides up from below with fade)
   const textEntranceProgress = interpolate(frame, [0, 45], [0, 1], {
     extrapolateLeft: "clamp",
@@ -80,24 +77,6 @@ export const Scene1Complaints: React.FC = () => {
     easing: Easing.out(Easing.cubic),
   });
   const textEntranceOpacity = textEntranceProgress;
-
-  // OpenClaw text types (4-5s = 120-150 frames)
-  const buttonTextProgress = Math.max(0, frame - 120);
-  const fullButtonText = "OpenClaw";
-  const charsToShow = Math.floor(buttonTextProgress / 2);
-  const displayButtonText = fullButtonText.slice(0, Math.min(charsToShow, fullButtonText.length));
-
-  // Cursor and click (6.5-7s = 195-210 frames)
-  const cursorProgress = interpolate(frame, [195, 210], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-
-  // Click flash
-  const flashOpacity = interpolate(frame, [210, 216], [0.8, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
 
   // Explosion to next scene (7-8s = 210-240 frames)
   const explosionProgress = interpolate(frame, [210, 240], [0, 1], {
@@ -114,6 +93,9 @@ export const Scene1Complaints: React.FC = () => {
   // Glow pulse
   const glowPulse = 1 + Math.sin(frame * 0.1) * 0.1;
 
+  // After transition starts (frame >= 120), show grid background
+  const showGridBackground = frame >= 120;
+
   return (
     <div
       style={{
@@ -129,7 +111,43 @@ export const Scene1Complaints: React.FC = () => {
         position: "relative",
       }}
     >
-      {/* Screenshots layer */}
+      {/* Grid background - appears after transition */}
+      {showGridBackground && (
+        <GridBackground color={COLORS.grid} size="100px" />
+      )}
+
+      {/* Dark background container with glowing border - appears after transition */}
+      {showGridBackground && (
+        <div
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 5,
+          }}
+        >
+          <GlowingBorder
+            width={BUTTON_BORDER_CONFIG.width}
+            height={BUTTON_BORDER_CONFIG.height}
+            borderRadius={BUTTON_BORDER_CONFIG.borderRadius}
+            glowOpacity={BUTTON_BORDER_CONFIG.glowOpacity}
+            glowSpread={BUTTON_BORDER_CONFIG.glowSpread * glowPulse}
+            pulse={false}
+          >
+            {/* Dark background inside the border */}
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                backgroundColor: "#0a0a0a",
+              }}
+            />
+          </GlowingBorder>
+        </div>
+      )}
+
+      {/* Screenshots layer - only visible before/during morph */}
       <div
         style={{
           position: "absolute",
@@ -141,6 +159,7 @@ export const Scene1Complaints: React.FC = () => {
           top: "50%",
           transform: "translate(-50%, -50%)",
           clipPath: `inset(0px round ${borderRadius}px)`,
+          zIndex: showGridBackground ? 1 : 10,
         }}
       >
         {SCREENSHOT_CONFIGS.map((config, i) => {
@@ -185,7 +204,7 @@ export const Scene1Complaints: React.FC = () => {
         })}
       </div>
 
-      {/* Button border layer */}
+      {/* Button border layer - morphs during transition */}
       <div
         style={{
           position: "absolute",
@@ -201,7 +220,7 @@ export const Scene1Complaints: React.FC = () => {
             0 0 ${glowSpread * 2 * glowPulse}px rgba(249, 115, 22, ${glowOpacity * 0.5})
           `,
           pointerEvents: "none",
-          zIndex: 5,
+          zIndex: showGridBackground ? 1 : 5,
         }}
       />
 
