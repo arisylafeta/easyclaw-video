@@ -202,6 +202,7 @@ export const Scene1Complaints: React.FC = () => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           zIndex: 10,
+          whiteSpace: "nowrap",
         }}
       >
         <span
@@ -211,7 +212,6 @@ export const Scene1Complaints: React.FC = () => {
             color: COLORS.textWhite,
             textAlign: "center",
             display: "block",
-            textShadow: `0 0 40px rgba(249, 115, 22, 0.6)`,
           }}
         >
           You are not alone
