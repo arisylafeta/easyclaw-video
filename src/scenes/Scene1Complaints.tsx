@@ -50,54 +50,54 @@ const SCREENSHOT_CONFIGS = [
 export const Scene1Complaints: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  
+
   // PHASE 1: Screenshots drop in (0-3 seconds = 0-90 frames)
   // PHASE 2: Morph to button (3-4 seconds = 90-120 frames)
   // PHASE 3: Button with text (4-8 seconds = 120-240 frames)
-  
+
   // Morph progress: 0 = full screen, 1 = button size
   const morphProgress = interpolate(frame, [90, 120], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  
+
   // Button dimensions morph from full screen to button size
   const buttonWidth = interpolate(morphProgress, [0, 1], [1920, 280]);
   const buttonHeight = interpolate(morphProgress, [0, 1], [1080, 80]);
   const borderRadius = interpolate(morphProgress, [0, 1], [0, 50]);
-  
+
   // Border glow
   const glowOpacity = interpolate(morphProgress, [0, 1], [0.1, 0.6]);
   const glowSpread = interpolate(morphProgress, [0, 1], [10, 60]);
-  
+
   // Screenshots scale with the container
   const screenshotScale = interpolate(morphProgress, [0, 1], [1, 0.15]);
   const screenshotOpacity = interpolate(morphProgress, [0.5, 1], [1, 0]);
-  
+
   // Text appears after morph (4s = 120 frames)
   const textProgress = interpolate(frame, [120, 135], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  
+
   // OpenClaw text types (4-5s = 120-150 frames)
   const buttonTextProgress = Math.max(0, frame - 120);
   const fullButtonText = "OpenClaw";
   const charsToShow = Math.floor(buttonTextProgress / 2);
   const displayButtonText = fullButtonText.slice(0, Math.min(charsToShow, fullButtonText.length));
-  
+
   // Cursor and click (6.5-7s = 195-210 frames)
   const cursorProgress = interpolate(frame, [195, 210], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  
+
   // Click flash
   const flashOpacity = interpolate(frame, [210, 216], [0.8, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  
+
   // Explosion to next scene (7-8s = 210-240 frames)
   const explosionProgress = interpolate(frame, [210, 240], [0, 1], {
     extrapolateLeft: "clamp",
@@ -109,10 +109,10 @@ export const Scene1Complaints: React.FC = () => {
   const explosionOpacity = interpolate(explosionProgress, [0, 0.7], [1, 0], {
     extrapolateRight: "clamp",
   });
-  
+
   // Glow pulse
   const glowPulse = 1 + Math.sin(frame * 0.1) * 0.1;
-  
+
   return (
     <div
       style={{
@@ -146,16 +146,16 @@ export const Scene1Complaints: React.FC = () => {
           const screenshot = SCREENSHOTS[config.screenshotIndex];
           const startFrame = config.delay;
           const endFrame = config.delay + 12;
-          
+
           const dropProgress = interpolate(frame, [startFrame, endFrame], [0, 1], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
           });
-          
+
           const animScale = interpolate(dropProgress, [0, 1], [0.5, 1]);
           const opacity = dropProgress;
           const finalScale = animScale * config.scale * screenshotScale;
-          
+
           return (
             <div
               key={i}
@@ -183,7 +183,7 @@ export const Scene1Complaints: React.FC = () => {
           );
         })}
       </div>
-      
+
       {/* Button border layer */}
       <div
         style={{
@@ -203,119 +203,8 @@ export const Scene1Complaints: React.FC = () => {
           zIndex: 5,
         }}
       />
-      
-      {/* Text and button content layer */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 24,
-          position: "relative",
-          zIndex: 10,
-        }}
-      >
-        {/* "Setup" text */}
-        <span
-          style={{
-            fontSize: 64,
-            fontWeight: 700,
-            color: COLORS.textWhite,
-            opacity: textProgress,
-            transform: `translateX(${(1 - textProgress) * -50}px)`,
-            textShadow: `0 0 ${30 * glowPulse}px rgba(249, 115, 22, 0.5)`,
-          }}
-        >
-          Setup
-        </span>
-        
-        {/* Button content area */}
-        <div
-          style={{
-            width: buttonWidth,
-            height: buttonHeight,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
-          }}
-        >
-          {/* OpenClaw text */}
-          <span
-            style={{
-              fontSize: 48,
-              fontWeight: 700,
-              color: COLORS.accentOrange,
-              letterSpacing: "0.02em",
-              textShadow: `0 0 ${20 * glowPulse}px rgba(249, 115, 22, 0.8)`,
-              zIndex: 20,
-            }}
-          >
-            {displayButtonText}
-          </span>
-          
-          {/* Typing cursor */}
-          {frame < 140 && (
-            <span
-              style={{
-                display: "inline-block",
-                width: 3,
-                height: "1em",
-                backgroundColor: COLORS.accentOrange,
-                marginLeft: 4,
-              }}
-            />
-          )}
-          
-          {/* Click flash */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              backgroundColor: "white",
-              opacity: flashOpacity,
-              pointerEvents: "none",
-              zIndex: 30,
-              borderRadius: borderRadius,
-            }}
-          />
-        </div>
-        
-        {/* "in one click" text */}
-        <span
-          style={{
-            fontSize: 64,
-            fontWeight: 700,
-            color: COLORS.accentOrange,
-            opacity: textProgress,
-            transform: `translateX(${(1 - textProgress) * 50}px)`,
-            textShadow: `
-              0 0 ${30 * glowPulse}px rgba(249, 115, 22, 0.8),
-              0 0 ${60 * glowPulse}px rgba(249, 115, 22, 0.4)
-            `,
-          }}
-        >
-          in one click
-        </span>
-      </div>
-      
-      {/* Cursor */}
-      {frame >= 195 && frame < 216 && (
-        <div
-          style={{
-            position: "absolute",
-            width: 24,
-            height: 24,
-            backgroundColor: "white",
-            borderRadius: "50%",
-            left: "50%",
-            top: "50%",
-            transform: `translate(-50%, -50%) translateX(${interpolate(cursorProgress, [0, 1], [200, 0])}px)`,
-            boxShadow: "0 2px 12px rgba(255,255,255,0.5)",
-            pointerEvents: "none",
-            zIndex: 100,
-          }}
-        />
-      )}
+
+
     </div>
   );
 };
