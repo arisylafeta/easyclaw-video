@@ -111,42 +111,9 @@ export const Scene1Complaints: React.FC = () => {
         position: "relative",
       }}
     >
-      {/* Grid background - appears after transition */}
+      {/* Grid background with blobs - appears after transition */}
       {showGridBackground && (
-        <GridBackground color={COLORS.grid} size="100px" />
-      )}
-
-      {/* Faint greenish-blue blob - appears after transition */}
-      {showGridBackground && (
-        <div
-          style={{
-            position: "absolute",
-            width: "800px",
-            height: "800px",
-            left: "-200px",
-            top: "50%",
-            transform: "translateY(-50%)",
-            background: "radial-gradient(circle, rgba(34, 197, 94, 0.2) 0%, transparent 70%)",
-            pointerEvents: "none",
-            zIndex: 2,
-          }}
-        />
-      )}
-
-      {/* Faint orangeish-red blob - appears after transition */}
-      {showGridBackground && (
-        <div
-          style={{
-            position: "absolute",
-            width: "900px",
-            height: "900px",
-            right: "-300px",
-            top: "30%",
-            background: "radial-gradient(circle, rgba(239, 68, 68, 0.2) 0%, transparent 70%)",
-            pointerEvents: "none",
-            zIndex: 2,
-          }}
-        />
+        <GridBackground color={COLORS.grid} size="100px" showBlobs />
       )}
 
       {/* Dark background container with glowing border - appears after transition */}
