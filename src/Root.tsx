@@ -9,26 +9,26 @@ import { Scene6CTA } from "./scenes/Scene6CTA";
 const FPS = 30;
 
 // Scene timing (in frames)
-// Scene 0: CLI Chaos + Problem text (0:00 - 0:05)
+// Scene 0: CLI Chaos + Problem text (0:00 - 0:04)
 const SCENE_0_START = 0;
-const SCENE_0_DURATION = 5 * FPS;   // 0:00 - 0:05 (150 frames)
+const SCENE_0_DURATION = 4 * FPS;   // 0:00 - 0:04 (120 frames)
 
-// Scene 1: Screenshots cascade + button morph + click (0:05 - 0:13)
+// Scene 1: Screenshots cascade + button morph + click (0:04 - 0:12)
 // Merged Scene1 and Scene2 - now handles the full transition
-const SCENE_1_START = 150;
-const SCENE_1_DURATION = 8 * FPS;   // 0:05 - 0:13 (240 frames)
+const SCENE_1_START = 120;
+const SCENE_1_DURATION = 8 * FPS;   // 0:04 - 0:12 (240 frames)
 
-// Scene 3: Features (0:13 - 0:31) - 18 seconds for 2 sub-scenes + fade
-const SCENE_3_START = 390;
-const SCENE_3_DURATION = 18 * FPS;   // 0:13 - 0:31 (540 frames)
+// Scene 3: Features (0:12 - 0:19.8) - 7.8 seconds for 2 sub-scenes + fade
+const SCENE_3_START = 360;
+const SCENE_3_DURATION = 235;   // 0:12 - 0:19.8 (235 frames)
 
-// Scene 4: Channels (0:31 - 0:35) - 4 seconds with faster transitions
-const SCENE_4_START = 930;
-const SCENE_4_DURATION = 4 * FPS;   // 0:31 - 0:35 (120 frames)
+// Scene 4: Channels (0:19.8 - 0:23.5) - 3.7 seconds, ends after iMessage
+const SCENE_4_START = 595;
+const SCENE_4_DURATION = 111;   // 0:19.8 - 0:23.5 (111 frames)
 
-// Scene 6: CTA (0:35 - 0:40)
-const SCENE_6_START = 1050;
-const SCENE_6_DURATION = 5 * FPS;   // 0:35 - 0:40 (150 frames)
+// Scene 6: CTA (0:23.5 - 0:28.5)
+const SCENE_6_START = 706;
+const SCENE_6_DURATION = 5 * FPS;   // 0:23.5 - 0:28.5 (150 frames)
 
 const TOTAL_FRAMES = SCENE_6_START + SCENE_6_DURATION;
 
@@ -52,27 +52,27 @@ export const RemotionRoot: React.FC = () => {
 const EasyClawDemo: React.FC = () => {
   return (
     <div style={{ width: "100%", height: "100%", backgroundColor: "#0a0a0a" }}>
-      {/* Scene 0: CLI Chaos + Problem text (0:00 - 0:05) */}
+      {/* Scene 0: CLI Chaos + Problem text (0:00 - 0:04) */}
       <Sequence from={SCENE_0_START} durationInFrames={SCENE_0_DURATION}>
         <Scene0CLIChaos />
       </Sequence>
 
-      {/* Scene 1: Screenshots cascade + button morph + click (0:05 - 0:15) */}
+      {/* Scene 1: Screenshots cascade + button morph + click (0:04 - 0:12) */}
       <Sequence from={SCENE_1_START} durationInFrames={SCENE_1_DURATION}>
         <Scene1Complaints />
       </Sequence>
 
-      {/* Scene 3: Features (0:13 - 0:31) - 18 seconds for onboarding + features */}
+      {/* Scene 3: Features (0:12 - 0:19.8) - 7.8 seconds for onboarding + features */}
       <Sequence from={SCENE_3_START} durationInFrames={SCENE_3_DURATION}>
         <Scene3Features />
       </Sequence>
 
-      {/* Scene 4: Channels (0:31 - 0:35) - 4 seconds with faster transitions */}
+      {/* Scene 4: Channels (0:19.8 - 0:23.5) - 3.7 seconds, ends after iMessage */}
       <Sequence from={SCENE_4_START} durationInFrames={SCENE_4_DURATION}>
         <Scene4Channels />
       </Sequence>
 
-      {/* Scene 6: CTA (0:35 - 0:40) - with glowing border */}
+      {/* Scene 6: CTA (0:23.5 - 0:28.5) - with glowing border */}
       <Sequence from={SCENE_6_START} durationInFrames={SCENE_6_DURATION}>
         <Scene6CTA />
       </Sequence>

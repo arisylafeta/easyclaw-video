@@ -36,16 +36,17 @@ const SCREENSHOTS = [
 ];
 
 // Screenshot positions - 9 screenshots spread in lower 60% of container
+// Screenshot 2 (index 2) drops first and stays, then others drop faster
 const SCREENSHOT_CONFIGS = [
-  { x: -100, y: 450, rotation: -3, scale: 0.9, delay: 0, screenshotIndex: 0 },
-  { x: 400, y: 480, rotation: 4, scale: 0.88, delay: 8, screenshotIndex: 1 },
-  { x: 900, y: 450, rotation: -2, scale: 0.85, delay: 16, screenshotIndex: 2 },
-  { x: 1400, y: 500, rotation: 3, scale: 0.87, delay: 24, screenshotIndex: 3 },
-  { x: 100, y: 650, rotation: 2, scale: 0.86, delay: 4, screenshotIndex: 4 },
-  { x: 600, y: 680, rotation: -4, scale: 0.9, delay: 12, screenshotIndex: 5 },
-  { x: 1100, y: 650, rotation: 1, scale: 0.84, delay: 20, screenshotIndex: 6 },
-  { x: -100, y: 810, rotation: -2, scale: 0.88, delay: 6, screenshotIndex: 9 },
-  { x: 1000, y: 880, rotation: 2, scale: 0.85, delay: 14, screenshotIndex: 8 },
+  { x: -100, y: 450, rotation: -3, scale: 0.9, delay: 45, screenshotIndex: 0, duration: 8 },
+  { x: 400, y: 480, rotation: 4, scale: 0.88, delay: 0, screenshotIndex: 1, duration: 12 },
+  { x: 900, y: 450, rotation: -2, scale: 0.85, delay: 30, screenshotIndex: 2, duration: 8 },
+  { x: 1400, y: 500, rotation: 3, scale: 0.87, delay: 38, screenshotIndex: 3, duration: 8 },
+  { x: 100, y: 650, rotation: 2, scale: 0.86, delay: 46, screenshotIndex: 4, duration: 8 },
+  { x: 600, y: 680, rotation: -4, scale: 0.9, delay: 52, screenshotIndex: 5, duration: 8 },
+  { x: 1100, y: 650, rotation: 1, scale: 0.84, delay: 58, screenshotIndex: 6, duration: 8 },
+  { x: -100, y: 810, rotation: -2, scale: 0.88, delay: 64, screenshotIndex: 9, duration: 8 },
+  { x: 1000, y: 880, rotation: 2, scale: 0.85, delay: 70, screenshotIndex: 8, duration: 8 },
 ];
 
 export const Scene1Complaints: React.FC = () => {
@@ -339,7 +340,7 @@ export const Scene1Complaints: React.FC = () => {
         {SCREENSHOT_CONFIGS.map((config, i) => {
           const screenshot = SCREENSHOTS[config.screenshotIndex];
           const startFrame = config.delay;
-          const endFrame = config.delay + 12;
+          const endFrame = config.delay + (config.duration || 12);
 
           const dropProgress = interpolate(frame, [startFrame, endFrame], [0, 1], {
             extrapolateLeft: "clamp",

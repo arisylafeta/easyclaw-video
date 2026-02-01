@@ -35,16 +35,16 @@ export const Scene0CLIChaos: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Text animation timing
-  const textStartFrame = 30;
-  const textProgress = interpolate(frame, [textStartFrame, textStartFrame + 30], [0, 1], {
+  // Text animation timing - faster fade in
+  const textStartFrame = 15;
+  const textProgress = interpolate(frame, [textStartFrame, textStartFrame + 15], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
-  // Exit animation for transition to screenshots
-  const exitStartFrame = 120; // 4 seconds
-  const exitProgress = interpolate(frame, [exitStartFrame, 150], [0, 1], {
+  // Exit animation for transition to screenshots - scene ends at 4s (120 frames)
+  const exitStartFrame = 90; // 3 seconds
+  const exitProgress = interpolate(frame, [exitStartFrame, 120], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -190,11 +190,11 @@ export const Scene0CLIChaos: React.FC = () => {
             fontSize: "32px",
             fontWeight: 500,
             color: COLORS.textSecondary,
-            opacity: interpolate(frame, [textStartFrame + 15, textStartFrame + 45], [0, 1], {
+            opacity: interpolate(frame, [textStartFrame + 8, textStartFrame + 20], [0, 1], {
               extrapolateLeft: "clamp",
               extrapolateRight: "clamp",
             }),
-            transform: `translateY(${(1 - interpolate(frame, [textStartFrame + 15, textStartFrame + 45], [0, 1], {
+            transform: `translateY(${(1 - interpolate(frame, [textStartFrame + 8, textStartFrame + 20], [0, 1], {
               extrapolateLeft: "clamp",
               extrapolateRight: "clamp",
             })) * 20}px)`,
@@ -210,11 +210,11 @@ export const Scene0CLIChaos: React.FC = () => {
             height: "4px",
             backgroundColor: COLORS.accent,
             marginTop: "40px",
-            opacity: interpolate(frame, [textStartFrame + 30, textStartFrame + 60], [0, 1], {
+            opacity: interpolate(frame, [textStartFrame + 15, textStartFrame + 25], [0, 1], {
               extrapolateLeft: "clamp",
               extrapolateRight: "clamp",
             }),
-            transform: `scaleX(${interpolate(frame, [textStartFrame + 30, textStartFrame + 60], [0, 1], {
+            transform: `scaleX(${interpolate(frame, [textStartFrame + 15, textStartFrame + 25], [0, 1], {
               extrapolateLeft: "clamp",
               extrapolateRight: "clamp",
             })})`,

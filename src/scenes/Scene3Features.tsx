@@ -56,7 +56,7 @@ const OnboardingSceneContent: React.FC = () => {
     },
   ];
 
-  // Title animation - 50% bigger
+  // Title animation - synced with first card (no delay)
   const titleProgress = spring({
     frame,
     fps,
@@ -122,7 +122,7 @@ const OnboardingSceneContent: React.FC = () => {
         }}
       >
         {steps.map((step, index) => {
-          const stepDelay = index * 30 + 45;
+          const stepDelay = index * 30;
           const stepProgress = spring({
             frame: frame - stepDelay,
             fps,
@@ -295,10 +295,13 @@ const SparkleDecoration: React.FC<{
   );
 };
 
-// FEATURES SCENE CONTENT - 270 to 540 frames (9 seconds)
-const FeaturesSceneContent: React.FC = () => {
-  const frame = useCurrentFrame();
+// FEATURES SCENE CONTENT - starts after scene1Duration
+const FeaturesSceneContent: React.FC<{ sceneOffset: number }> = ({
+  sceneOffset,
+}) => {
+  const globalFrame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const frame = globalFrame - sceneOffset; // Frame relative to scene 2 start
 
   const features = [
     {
@@ -393,7 +396,7 @@ const FeaturesSceneContent: React.FC = () => {
         }}
       >
         {features.map((feature, index) => {
-          const featureDelay = index * 22 + 37;
+          const featureDelay = index * 22;
           const featureProgress = spring({
             frame: frame - featureDelay,
             fps,
@@ -502,11 +505,11 @@ export const Scene3Features: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const scene1Duration = 270; // 9 seconds
-  const scene2Duration = 270; // 9 seconds
-  const fadeDuration = 45; // 1.5 second fade
-  const totalDuration = scene1Duration + scene2Duration;
-  const explosionStart = totalDuration - 30; // Start explosion 1 second before end
+  const scene1Duration = 130; // ~4.3 seconds
+  const scene2Duration = 105; // 3.5 seconds for features
+  const fadeDuration = 20; // 0.67 second fade
+  const totalDuration = scene1Duration + scene2Duration; // 235 total
+  const explosionStart = totalDuration - 15; // Start explosion 0.5s before end, let it continue after scene ends
 
   // Fade out scene 1
   const scene1FadeOut = interpolate(
@@ -524,10 +527,10 @@ export const Scene3Features: React.FC = () => {
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
-  // Scene 2 fade out with explosion
+  // Scene 2 fade out with explosion - fade out later to avoid empty time
   const scene2FadeOut = interpolate(
     frame,
-    [explosionStart - 15, explosionStart + 10],
+    [explosionStart - 5, totalDuration - 5],
     [1, 0],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
@@ -599,7 +602,7 @@ export const Scene3Features: React.FC = () => {
           zIndex: 1,
         }}
       >
-        <FeaturesSceneContent />
+        <FeaturesSceneContent sceneOffset={scene1Duration} />
       </div>
 
 

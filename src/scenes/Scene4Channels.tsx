@@ -25,6 +25,7 @@ export const Scene4Channels: React.FC = () => {
   
   // Platform cycling - faster transitions
   // Each platform shows for 0.8 seconds (24 frames) with 0.2s (6 frames) transition
+  // Scene ends after iMessage (4 platforms total = 96 frames + 15 delay = 111 frames)
   const cycleDuration = 24;
   const transitionDuration = 6;
   
@@ -33,14 +34,24 @@ export const Scene4Channels: React.FC = () => {
     PLATFORMS.length - 1
   ));
   
+  // Fade out at the end (frames 96-111 = 0.5s fade out)
+  const fadeOutProgress = interpolate(frame, [96, 111], [1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  
+  // Stop platform cycling after iMessage (index 3)
+  const isLastPlatform = currentPlatformIndex >= PLATFORMS.length - 1;
+  
   const platformFrame = (frame - 15) % cycleDuration;
-  const isTransitioning = platformFrame > cycleDuration - transitionDuration;
+  // Stop transitions on the last platform
+  const isTransitioning = !isLastPlatform && platformFrame > cycleDuration - transitionDuration;
   const transitionProgress = isTransitioning
     ? (platformFrame - (cycleDuration - transitionDuration)) / transitionDuration
     : 0;
   
   const currentPlatform = PLATFORMS[currentPlatformIndex];
-  const nextPlatform = PLATFORMS[Math.min(currentPlatformIndex + 1, PLATFORMS.length - 1)];
+  const nextPlatform = isLastPlatform ? null : PLATFORMS[currentPlatformIndex + 1];
   
   // Vertical fade animations - old fades up, new fades in from bottom
   const fadeOutY = interpolate(transitionProgress, [0, 1], [0, -80], {
@@ -57,24 +68,9 @@ export const Scene4Channels: React.FC = () => {
     extrapolateLeft: "clamp",
   });
   
-  // Particle dissolve transition (3.2-4.0s = 96-120 frames)
-  const dissolveStart = 96;
-  const dissolveProgress = interpolate(frame, [dissolveStart, 120], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const sceneOpacity = interpolate(dissolveProgress, [0, 1], [1, 0]);
+
   
-  // Generate particles
-  const particles = Array.from({ length: 50 }, (_, i) => ({
-    id: i,
-    x: 960 + (Math.random() - 0.5) * 400,
-    y: 540 + (Math.random() - 0.5) * 200,
-    vx: (Math.random() - 0.5) * 20,
-    vy: (Math.random() - 0.5) * 20,
-    size: 4 + Math.random() * 4,
-    delay: Math.random() * 20,
-  }));
+
 
   return (
     <div
@@ -87,9 +83,10 @@ export const Scene4Channels: React.FC = () => {
         justifyContent: "center",
         alignItems: "center",
         fontFamily: "Inter, system-ui, sans-serif",
-        opacity: sceneOpacity,
+
         position: "relative",
         overflow: "hidden",
+        opacity: fadeOutProgress,
       }}
     >
       <GridBackground color={COLORS.grid} size="100px" showBlobs />
@@ -197,39 +194,7 @@ export const Scene4Channels: React.FC = () => {
         </div>
       </div>
       
-      {/* Particle Dissolve Effect */}
-      {frame >= dissolveStart && (
-        <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-          {particles.map((p) => {
-            const particleProgress = interpolate(
-              frame,
-              [dissolveStart + p.delay, dissolveStart + p.delay + 30],
-              [0, 1],
-              { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
-            );
 
-            const x = p.x + p.vx * particleProgress * 10;
-            const y = p.y + p.vy * particleProgress * 10;
-            const opacity = interpolate(particleProgress, [0, 0.5, 1], [0, 1, 0]);
-
-            return (
-              <div
-                key={p.id}
-                style={{
-                  position: "absolute",
-                  left: x,
-                  top: y,
-                  width: p.size,
-                  height: p.size,
-                  borderRadius: "50%",
-                  backgroundColor: currentPlatform?.color || COLORS.textPrimary,
-                  opacity,
-                }}
-              />
-            );
-          })}
-        </div>
-      )}
     </div>
   );
 };
