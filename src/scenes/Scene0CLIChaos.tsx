@@ -1,5 +1,6 @@
 import React from "react";
 import { interpolate, useCurrentFrame, useVideoConfig, Easing } from "remotion";
+import { GridBackground } from "../components/GridBackground";
 
 const COLORS = {
   bg: "#0a0a0a",
@@ -8,6 +9,7 @@ const COLORS = {
   accent: "#f97316",
   error: "#ef4444",
   success: "#22c55e",
+  grid: "rgba(249, 115, 22, 0.03)",
 };
 
 // CLI chaos lines that will appear rapidly
@@ -32,26 +34,26 @@ const CLI_LINES = [
 export const Scene0CLIChaos: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  
+
   // Text animation timing
   const textStartFrame = 30;
   const textProgress = interpolate(frame, [textStartFrame, textStartFrame + 30], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  
+
   // Exit animation for transition to screenshots
   const exitStartFrame = 120; // 4 seconds
   const exitProgress = interpolate(frame, [exitStartFrame, 150], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  
+
   const exitScale = interpolate(exitProgress, [0, 1], [1, 0.9], {
     easing: Easing.in(Easing.cubic),
   });
   const exitOpacity = interpolate(exitProgress, [0, 1], [1, 0]);
-  
+
   return (
     <div
       style={{
@@ -94,26 +96,26 @@ export const Scene0CLIChaos: React.FC = () => {
             <div style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: "#f59e0b" }} />
             <div style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: "#22c55e" }} />
           </div>
-          
+
           {/* Scrolling CLI lines */}
           <div style={{ fontSize: "14px", lineHeight: 1.8 }}>
             {CLI_LINES.map((line, i) => {
               const lineFrame = frame - line.delay;
-              const opacity = interpolate(lineFrame, [0, 8], [0, 1], { 
-                extrapolateLeft: "clamp", 
-                extrapolateRight: "clamp" 
+              const opacity = interpolate(lineFrame, [0, 8], [0, 1], {
+                extrapolateLeft: "clamp",
+                extrapolateRight: "clamp"
               });
-              const translateY = interpolate(lineFrame, [0, 8], [10, 0], { 
-                extrapolateLeft: "clamp", 
-                extrapolateRight: "clamp" 
+              const translateY = interpolate(lineFrame, [0, 8], [10, 0], {
+                extrapolateLeft: "clamp",
+                extrapolateRight: "clamp"
               });
-              
+
               const isError = line.type === "error";
               const color = isError ? COLORS.error : COLORS.success;
-              
+
               // Glitch effect for errors
               const glitchOffset = isError && frame % 4 < 2 ? 2 : 0;
-              
+
               return (
                 <div
                   key={i}
@@ -129,7 +131,7 @@ export const Scene0CLIChaos: React.FC = () => {
               );
             })}
           </div>
-          
+
           {/* Blinking cursor */}
           <div
             style={{
@@ -141,7 +143,7 @@ export const Scene0CLIChaos: React.FC = () => {
             }}
           />
         </div>
-        
+
         {/* Chaos overlay effect */}
         <div
           style={{
@@ -152,7 +154,7 @@ export const Scene0CLIChaos: React.FC = () => {
           }}
         />
       </div>
-      
+
       {/* Right side: Problem text */}
       <div
         style={{
@@ -180,7 +182,7 @@ export const Scene0CLIChaos: React.FC = () => {
         >
           Tired of handling all this infrastructure?
         </div>
-        
+
         {/* Subtext */}
         <div
           style={{
@@ -198,9 +200,8 @@ export const Scene0CLIChaos: React.FC = () => {
             fontFamily: "Inter, system-ui, sans-serif",
           }}
         >
-          You&apos;re not alone.
         </div>
-        
+
         {/* Accent line */}
         <div
           style={{
@@ -220,20 +221,8 @@ export const Scene0CLIChaos: React.FC = () => {
           }}
         />
       </div>
-      
-      {/* Grid background */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage: `
-            linear-gradient(rgba(249, 115, 22, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(249, 115, 22, 0.03) 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
-          pointerEvents: "none",
-        }}
-      />
+
+      <GridBackground color={COLORS.grid} />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig, Easing } from "remotion";
+import { GridBackground } from "../components/GridBackground";
 
 const COLORS = {
   bg: "#0a0a0a",
@@ -81,18 +82,7 @@ export const Scene5Security: React.FC = () => {
         filter: `blur(${blurAmount}px)`,
       }}
     >
-      {/* Grid Background */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage: `
-            linear-gradient(${COLORS.grid} 1px, transparent 1px),
-            linear-gradient(90deg, ${COLORS.grid} 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
-        }}
-      />
+      <GridBackground color={COLORS.grid} />
       
       {/* Shield Particles */}
       <div style={{ position: "absolute", inset: 0 }}>
