@@ -9,7 +9,7 @@ const COLORS = {
   accent: "#f97316",
   error: "#ef4444",
   success: "#22c55e",
-  grid: "rgba(249, 115, 22, 0.03)",
+  grid: "rgba(249, 115, 22, 0.1)",
 };
 
 // CLI chaos lines that will appear rapidly
