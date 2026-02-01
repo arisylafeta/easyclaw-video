@@ -23,10 +23,10 @@ export const Scene4Channels: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   
-  // Platform cycling (0.5-5.0s = 15-150 frames)
-  // Each platform shows for 1.5 seconds (45 frames) with 0.3s (9 frames) transition
-  const cycleDuration = 45;
-  const transitionDuration = 9;
+  // Platform cycling - faster transitions
+  // Each platform shows for 0.8 seconds (24 frames) with 0.2s (6 frames) transition
+  const cycleDuration = 24;
+  const transitionDuration = 6;
   
   const currentPlatformIndex = Math.max(0, Math.min(
     Math.floor((frame - 15) / cycleDuration),
@@ -57,9 +57,9 @@ export const Scene4Channels: React.FC = () => {
     extrapolateLeft: "clamp",
   });
   
-  // Particle dissolve transition (5.0-6.0s = 150-180 frames)
-  const dissolveStart = 150;
-  const dissolveProgress = interpolate(frame, [dissolveStart, 180], [0, 1], {
+  // Particle dissolve transition (3.2-4.0s = 96-120 frames)
+  const dissolveStart = 96;
+  const dissolveProgress = interpolate(frame, [dissolveStart, 120], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
