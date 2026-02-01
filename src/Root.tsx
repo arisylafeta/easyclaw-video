@@ -18,17 +18,17 @@ const SCENE_0_DURATION = 5 * FPS;   // 0:00 - 0:05 (150 frames)
 const SCENE_1_START = 150;
 const SCENE_1_DURATION = 8 * FPS;   // 0:05 - 0:13 (240 frames)
 
-// Scene 3: Features (0:13 - 0:19)
+// Scene 3: Features (0:13 - 0:31) - 18 seconds for 2 sub-scenes + fade
 const SCENE_3_START = 390;
-const SCENE_3_DURATION = 6 * FPS;   // 0:13 - 0:19 (180 frames)
+const SCENE_3_DURATION = 18 * FPS;   // 0:13 - 0:31 (540 frames)
 
-// Scene 4: Channels (0:19 - 0:25)
-const SCENE_4_START = 570;
-const SCENE_4_DURATION = 6 * FPS;   // 0:19 - 0:25 (180 frames)
+// Scene 4: Channels (0:31 - 0:37)
+const SCENE_4_START = 930;
+const SCENE_4_DURATION = 6 * FPS;   // 0:31 - 0:37 (180 frames)
 
-// Scene 6: CTA (0:25 - 0:30)
-const SCENE_6_START = 750;
-const SCENE_6_DURATION = 5 * FPS;   // 0:25 - 0:30 (150 frames)
+// Scene 6: CTA (0:37 - 0:42)
+const SCENE_6_START = 1110;
+const SCENE_6_DURATION = 5 * FPS;   // 0:37 - 0:42 (150 frames)
 
 const TOTAL_FRAMES = SCENE_6_START + SCENE_6_DURATION;
 
@@ -62,17 +62,17 @@ const EasyClawDemo: React.FC = () => {
         <Scene1Complaints />
       </Sequence>
 
-      {/* Scene 3: Features (0:15 - 0:21) - with glowing border */}
+      {/* Scene 3: Features (0:13 - 0:31) - 18 seconds for onboarding + features */}
       <Sequence from={SCENE_3_START} durationInFrames={SCENE_3_DURATION}>
         <Scene3Features />
       </Sequence>
 
-      {/* Scene 4: Channels (0:21 - 0:27) - with glowing border */}
+      {/* Scene 4: Channels (0:31 - 0:37) - with glowing border */}
       <Sequence from={SCENE_4_START} durationInFrames={SCENE_4_DURATION}>
         <Scene4Channels />
       </Sequence>
 
-      {/* Scene 6: CTA (0:27 - 0:32) - with glowing border */}
+      {/* Scene 6: CTA (0:37 - 0:42) - with glowing border */}
       <Sequence from={SCENE_6_START} durationInFrames={SCENE_6_DURATION}>
         <Scene6CTA />
       </Sequence>
