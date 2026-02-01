@@ -24,27 +24,27 @@ const SCREENSHOTS = [
   { file: "image (12).png", width: 1062, height: 182 },
 ];
 
-// Screenshot positions to fill screen
+// Screenshot positions - all placed in lower half of container
 const SCREENSHOT_CONFIGS = [
-  { x: -150, y: -80, rotation: -4, scale: 0.9, delay: 0, screenshotIndex: 0 },
-  { x: 300, y: -60, rotation: 3, scale: 0.85, delay: 12, screenshotIndex: 1 },
-  { x: 750, y: -90, rotation: -2, scale: 0.88, delay: 6, screenshotIndex: 2 },
-  { x: 1200, y: -70, rotation: 4, scale: 0.82, delay: 18, screenshotIndex: 3 },
-  { x: -100, y: 150, rotation: 2, scale: 0.87, delay: 9, screenshotIndex: 4 },
-  { x: 350, y: 170, rotation: -3, scale: 0.83, delay: 24, screenshotIndex: 5 },
-  { x: 800, y: 140, rotation: 1, scale: 0.85, delay: 3, screenshotIndex: 6 },
-  { x: 1250, y: 160, rotation: -2, scale: 0.81, delay: 15, screenshotIndex: 7 },
-  { x: -50, y: 380, rotation: -1, scale: 0.88, delay: 21, screenshotIndex: 8 },
-  { x: 400, y: 400, rotation: 3, scale: 0.84, delay: 7, screenshotIndex: 9 },
-  { x: 850, y: 370, rotation: -3, scale: 0.86, delay: 27, screenshotIndex: 10 },
-  { x: 1300, y: 390, rotation: 2, scale: 0.82, delay: 11, screenshotIndex: 11 },
-  { x: 200, y: 620, rotation: -2, scale: 0.9, delay: 30, screenshotIndex: 12 },
-  { x: 650, y: 850, rotation: 1, scale: 0.85, delay: 14, screenshotIndex: 0 },
-  { x: 1100, y: 870, rotation: -3, scale: 0.88, delay: 26, screenshotIndex: 1 },
-  { x: 50, y: 920, rotation: 2, scale: 0.87, delay: 5, screenshotIndex: 2 },
+  { x: -150, y: 540, rotation: -4, scale: 0.9, delay: 0, screenshotIndex: 0 },
+  { x: 300, y: 540, rotation: 3, scale: 0.85, delay: 12, screenshotIndex: 1 },
+  { x: 750, y: 540, rotation: -2, scale: 0.88, delay: 6, screenshotIndex: 2 },
+  { x: 1200, y: 540, rotation: 4, scale: 0.82, delay: 18, screenshotIndex: 3 },
+  { x: -100, y: 640, rotation: 2, scale: 0.87, delay: 9, screenshotIndex: 4 },
+  { x: 350, y: 640, rotation: -3, scale: 0.83, delay: 24, screenshotIndex: 5 },
+  { x: 800, y: 640, rotation: 1, scale: 0.85, delay: 3, screenshotIndex: 6 },
+  { x: 1250, y: 640, rotation: -2, scale: 0.81, delay: 15, screenshotIndex: 7 },
+  { x: -50, y: 740, rotation: -1, scale: 0.88, delay: 21, screenshotIndex: 8 },
+  { x: 400, y: 740, rotation: 3, scale: 0.84, delay: 7, screenshotIndex: 9 },
+  { x: 850, y: 740, rotation: -3, scale: 0.86, delay: 27, screenshotIndex: 10 },
+  { x: 1300, y: 740, rotation: 2, scale: 0.82, delay: 11, screenshotIndex: 11 },
+  { x: 200, y: 840, rotation: -2, scale: 0.9, delay: 30, screenshotIndex: 12 },
+  { x: 650, y: 840, rotation: 1, scale: 0.85, delay: 14, screenshotIndex: 0 },
+  { x: 1100, y: 840, rotation: -3, scale: 0.88, delay: 26, screenshotIndex: 1 },
+  { x: 50, y: 940, rotation: 2, scale: 0.87, delay: 5, screenshotIndex: 2 },
   { x: 500, y: 940, rotation: -1, scale: 0.83, delay: 19, screenshotIndex: 3 },
-  { x: 950, y: 910, rotation: 3, scale: 0.85, delay: 25, screenshotIndex: 4 },
-  { x: 1400, y: 930, rotation: -2, scale: 0.81, delay: 17, screenshotIndex: 5 },
+  { x: 950, y: 940, rotation: 3, scale: 0.85, delay: 25, screenshotIndex: 4 },
+  { x: 1400, y: 940, rotation: -2, scale: 0.81, delay: 17, screenshotIndex: 5 },
 ];
 
 export const Scene1Complaints: React.FC = () => {
