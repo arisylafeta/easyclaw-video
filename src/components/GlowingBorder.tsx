@@ -48,10 +48,10 @@ export const GlowingBorder: React.FC<GlowingBorderProps> = ({
   );
 };
 
-// Button-sized glowing border dimensions (matching the button from Scene1)
+// Button-sized glowing border dimensions (2x size: 560x160)
 export const BUTTON_BORDER_CONFIG = {
-  width: 280,
-  height: 80,
+  width: 560,
+  height: 160,
   borderRadius: 50,
   glowOpacity: 0.6,
   glowSpread: 60,
