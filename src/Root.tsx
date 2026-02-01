@@ -1,42 +1,35 @@
 import { Composition, Sequence } from "remotion";
-import { Shot1Hook } from "./Shots1-2";
-import { Shot2Problem } from "./Shots1-2";
-import { Shot3Solution } from "./Shots3-5";
-import { Shot4Capabilities } from "./Shots3-5";
-import { Shot5Wall } from "./Shots3-5";
-import { Shot6Channels } from "./Shots6-8";
-import { Shot7Security } from "./Shots6-8";
-import { Shot8CTA } from "./Shots6-8";
+import { Scene1Complaints } from "./scenes/Scene1Complaints";
+import { Scene2OneClick } from "./scenes/Scene2OneClick";
+import { Scene3Features } from "./scenes/Scene3Features";
+import { Scene4Channels } from "./scenes/Scene4Channels";
+import { Scene5Security } from "./scenes/Scene5Security";
+import { Scene6CTA } from "./scenes/Scene6CTA";
 
-// 90 seconds at 30fps = 2700 frames
+// 30 seconds at 30fps = 900 frames
 const FPS = 30;
 
-// Shot timing (in frames)
-const SHOT_1_START = 0;
-const SHOT_1_DURATION = 8 * FPS;   // 0:00 - 0:08
+// Scene timing (in frames)
+const SCENE_1_START = 0;
+const SCENE_1_DURATION = 4 * FPS;   // 0:00 - 0:04 (120 frames)
 
-const SHOT_2_START = SHOT_1_START + SHOT_1_DURATION;
-const SHOT_2_DURATION = 10 * FPS;  // 0:08 - 0:18
+// Scene 2 starts at frame 90 (1 second before Scene 1 ends) for overlap/morph transition
+const SCENE_2_START = 90;
+const SCENE_2_DURATION = 4 * FPS;   // 0:03 - 0:07 (120 frames)
 
-const SHOT_3_START = SHOT_2_START + SHOT_2_DURATION;
-const SHOT_3_DURATION = 10 * FPS;  // 0:18 - 0:28
+const SCENE_3_START = 210;
+const SCENE_3_DURATION = 6 * FPS;   // 0:07 - 0:13 (180 frames)
 
-const SHOT_4_START = SHOT_3_START + SHOT_3_DURATION;
-const SHOT_4_DURATION = 20 * FPS;  // 0:28 - 0:48
+const SCENE_4_START = 390;
+const SCENE_4_DURATION = 6 * FPS;   // 0:13 - 0:19 (180 frames)
 
-const SHOT_5_START = SHOT_4_START + SHOT_4_DURATION;
-const SHOT_5_DURATION = 10 * FPS;  // 0:48 - 0:58
+const SCENE_5_START = 570;
+const SCENE_5_DURATION = 6 * FPS;   // 0:19 - 0:25 (180 frames)
 
-const SHOT_6_START = SHOT_5_START + SHOT_5_DURATION;
-const SHOT_6_DURATION = 10 * FPS;  // 0:58 - 1:08
+const SCENE_6_START = 750;
+const SCENE_6_DURATION = 4 * FPS;   // 0:25 - 0:29 (120 frames)
 
-const SHOT_7_START = SHOT_6_START + SHOT_6_DURATION;
-const SHOT_7_DURATION = 10 * FPS;  // 1:08 - 1:18
-
-const SHOT_8_START = SHOT_7_START + SHOT_7_DURATION;
-const SHOT_8_DURATION = 12 * FPS;  // 1:18 - 1:30
-
-const TOTAL_FRAMES = SHOT_8_START + SHOT_8_DURATION;
+const TOTAL_FRAMES = SCENE_6_START + SCENE_6_DURATION;
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -58,44 +51,34 @@ export const RemotionRoot: React.FC = () => {
 const EasyClawDemo: React.FC = () => {
   return (
     <div style={{ width: "100%", height: "100%", backgroundColor: "#0a0a0a" }}>
-      {/* Shot 1: Hook (0:00 - 0:08) */}
-      <Sequence from={SHOT_1_START} durationInFrames={SHOT_1_DURATION}>
-        <Shot1Hook />
+      {/* Scene 1: Complaint Cascade (0:00 - 0:04) */}
+      <Sequence from={SCENE_1_START} durationInFrames={SCENE_1_DURATION}>
+        <Scene1Complaints />
       </Sequence>
       
-      {/* Shot 2: Problem (0:08 - 0:18) */}
-      <Sequence from={SHOT_2_START} durationInFrames={SHOT_2_DURATION}>
-        <Shot2Problem />
+      {/* Scene 2: One Click Solution (0:04 - 0:08) */}
+      <Sequence from={SCENE_2_START} durationInFrames={SCENE_2_DURATION}>
+        <Scene2OneClick />
       </Sequence>
       
-      {/* Shot 3: Solution (0:18 - 0:28) */}
-      <Sequence from={SHOT_3_START} durationInFrames={SHOT_3_DURATION}>
-        <Shot3Solution />
+      {/* Scene 3: Feature Grid (0:08 - 0:14) */}
+      <Sequence from={SCENE_3_START} durationInFrames={SCENE_3_DURATION}>
+        <Scene3Features />
       </Sequence>
       
-      {/* Shot 4: Capabilities (0:28 - 0:48) */}
-      <Sequence from={SHOT_4_START} durationInFrames={SHOT_4_DURATION}>
-        <Shot4Capabilities />
+      {/* Scene 4: Channels (0:14 - 0:20) */}
+      <Sequence from={SCENE_4_START} durationInFrames={SCENE_4_DURATION}>
+        <Scene4Channels />
       </Sequence>
       
-      {/* Shot 5: Wall (0:48 - 0:58) */}
-      <Sequence from={SHOT_5_START} durationInFrames={SHOT_5_DURATION}>
-        <Shot5Wall />
+      {/* Scene 5: Security (0:20 - 0:26) */}
+      <Sequence from={SCENE_5_START} durationInFrames={SCENE_5_DURATION}>
+        <Scene5Security />
       </Sequence>
       
-      {/* Shot 6: Channels (0:58 - 1:08) */}
-      <Sequence from={SHOT_6_START} durationInFrames={SHOT_6_DURATION}>
-        <Shot6Channels />
-      </Sequence>
-      
-      {/* Shot 7: Security (1:08 - 1:18) */}
-      <Sequence from={SHOT_7_START} durationInFrames={SHOT_7_DURATION}>
-        <Shot7Security />
-      </Sequence>
-      
-      {/* Shot 8: CTA (1:18 - 1:30) */}
-      <Sequence from={SHOT_8_START} durationInFrames={SHOT_8_DURATION}>
-        <Shot8CTA />
+      {/* Scene 6: CTA (0:26 - 0:30) */}
+      <Sequence from={SCENE_6_START} durationInFrames={SCENE_6_DURATION}>
+        <Scene6CTA />
       </Sequence>
     </div>
   );
