@@ -139,7 +139,7 @@ export const Scene1Complaints: React.FC = () => {
         >
           <div
             style={{
-              fontSize: 192,
+              fontSize: 140,
               fontWeight: 600,
               color: COLORS.textWhite,
               fontFamily: "Inter, system-ui, sans-serif",
