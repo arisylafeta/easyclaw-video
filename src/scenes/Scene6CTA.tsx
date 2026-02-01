@@ -1,6 +1,7 @@
 import React from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig, Easing, Img, staticFile } from "remotion";
 import { GridBackground } from "../components/GridBackground";
+import { GlowingBorder, BUTTON_BORDER_CONFIG } from "../components/GlowingBorder";
 
 const COLORS = {
   bg: "#0a0a0a",
@@ -79,7 +80,10 @@ export const Scene6CTA: React.FC = () => {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  
+
+  // Glow pulse animation
+  const glowPulse = 1 + Math.sin(frame * 0.1) * 0.1;
+
   return (
     <div
       style={{
@@ -210,6 +214,27 @@ export const Scene6CTA: React.FC = () => {
           />
         )}
       </div>
+      </div>
+
+      {/* Glowing border - button sized, centered */}
+      <div
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          zIndex: 100,
+          pointerEvents: "none",
+        }}
+      >
+        <GlowingBorder
+          width={BUTTON_BORDER_CONFIG.width}
+          height={BUTTON_BORDER_CONFIG.height}
+          borderRadius={BUTTON_BORDER_CONFIG.borderRadius}
+          glowOpacity={BUTTON_BORDER_CONFIG.glowOpacity}
+          glowSpread={BUTTON_BORDER_CONFIG.glowSpread * glowPulse}
+          pulse={false}
+        />
       </div>
     </div>
   );
