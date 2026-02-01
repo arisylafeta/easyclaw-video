@@ -83,11 +83,11 @@ export const Scene0CLIChaos: React.FC = () => {
         {/* Terminal window */}
         <div
           style={{
-            backgroundColor: "#0d0d0d",
+            backgroundColor: "#000000",
             borderRadius: "12px",
             border: "1px solid #333",
-            padding: "24px",
-            boxShadow: "0 0 60px rgba(239, 68, 68, 0.15)",
+            padding: "32px",
+            boxShadow: "0 0 80px rgba(239, 68, 68, 0.25)",
             overflow: "hidden",
           }}
         >
@@ -99,7 +99,7 @@ export const Scene0CLIChaos: React.FC = () => {
           </div>
 
           {/* Scrolling CLI lines */}
-          <div style={{ fontSize: "14px", lineHeight: 1.8 }}>
+          <div style={{ fontSize: "20px", lineHeight: 2 }}>
             {CLI_LINES.map((line, i) => {
               const lineFrame = frame - line.delay;
               const opacity = interpolate(lineFrame, [0, 8], [0, 1], {
