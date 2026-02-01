@@ -1,0 +1,22 @@
+{
+  "name": "easyclaw-video",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "remotion studio",
+    "build": "remotion render src/index.tsx EasyClawDemo out/video.mp4",
+    "preview": "remotion preview",
+    "upgrade": "npm install @remotion/cli@latest remotion@latest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@remotion/cli": "^4.0.414",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "remotion": "^4.0.414"
+  }
+}
