@@ -70,6 +70,15 @@ export const Scene1Complaints: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
+  // Text entrance animation (slides up from below)
+  const textEntranceProgress = interpolate(frame, [0, 30], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const textSlideUp = interpolate(textEntranceProgress, [0, 1], [50, 0], {
+    easing: Easing.out(Easing.cubic),
+  });
+
   // OpenClaw text types (4-5s = 120-150 frames)
   const buttonTextProgress = Math.max(0, frame - 120);
   const fullButtonText = "OpenClaw";
@@ -206,8 +215,9 @@ export const Scene1Complaints: React.FC = () => {
           zIndex: 10,
           overflow: "hidden",
           display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "flex-start",
           paddingTop: "10%",
           opacity: screenshotOpacity,
         }}
@@ -219,12 +229,23 @@ export const Scene1Complaints: React.FC = () => {
             color: COLORS.textWhite,
             textAlign: "center",
             whiteSpace: "nowrap",
-            transform: `scale(${screenshotScale})`,
+            transform: `translateY(${textSlideUp}px) scale(${screenshotScale})`,
             transformOrigin: "center top",
           }}
         >
           You are not alone
         </span>
+        {/* Orange underline */}
+        <div
+          style={{
+            width: 40,
+            height: 3,
+            backgroundColor: COLORS.accentOrange,
+            marginTop: 16 * screenshotScale,
+            transform: `translateY(${textSlideUp}px) scale(${screenshotScale})`,
+            transformOrigin: "center top",
+          }}
+        />
       </div>
 
     </div>
