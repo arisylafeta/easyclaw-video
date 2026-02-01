@@ -1,8 +1,9 @@
 import React from "react";
-import { interpolate, spring, useCurrentFrame, useVideoConfig, Easing } from "remotion";
+import { interpolate, spring, useCurrentFrame, useVideoConfig, Easing, Img, staticFile } from "remotion";
 
 const COLORS = {
   bg: "#0a0a0a",
+  grid: "rgba(249, 115, 22, 0.1)",
   textPrimary: "#ffffff",
   whatsapp: "#25D366",
   telegram: "#0088CC",
@@ -11,28 +12,25 @@ const COLORS = {
 };
 
 const PLATFORMS = [
-  { name: "WhatsApp", color: COLORS.whatsapp },
-  { name: "Telegram", color: COLORS.telegram },
-  { name: "Discord", color: COLORS.discord },
-  { name: "iMessage", color: COLORS.imessage },
+  { name: "WhatsApp", color: COLORS.textPrimary, logo: "/logos/whatsapp.png", logoSize: 100 },
+  { name: "Telegram", color: COLORS.textPrimary, logo: "/logos/telegram.png", logoSize: 100 },
+  { name: "Discord", color: COLORS.textPrimary, logo: "/logos/discord.png", logoSize: 100 },
+  { name: "iMessage", color: COLORS.textPrimary, logo: "/logos/imessage.png", logoSize: 100 },
 ];
 
 export const Scene4Channels: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   
-  // "Connect with" text fade in (0-0.5s = 0-15 frames)
-  const headerOpacity = interpolate(frame, [0, 15], [0, 1], { extrapolateRight: "clamp" });
-  
   // Platform cycling (0.5-5.0s = 15-150 frames)
   // Each platform shows for 1.5 seconds (45 frames) with 0.3s (9 frames) transition
   const cycleDuration = 45;
   const transitionDuration = 9;
   
-  const currentPlatformIndex = Math.min(
+  const currentPlatformIndex = Math.max(0, Math.min(
     Math.floor((frame - 15) / cycleDuration),
     PLATFORMS.length - 1
-  );
+  ));
   
   const platformFrame = (frame - 15) % cycleDuration;
   const isTransitioning = platformFrame > cycleDuration - transitionDuration;
@@ -43,18 +41,18 @@ export const Scene4Channels: React.FC = () => {
   const currentPlatform = PLATFORMS[currentPlatformIndex];
   const nextPlatform = PLATFORMS[Math.min(currentPlatformIndex + 1, PLATFORMS.length - 1)];
   
-  // Slide animations
-  const slideOutX = interpolate(transitionProgress, [0, 1], [0, -150], {
-    easing: Easing.in(Easing.quad),
+  // Vertical fade animations - old fades up, new fades in from bottom
+  const fadeOutY = interpolate(transitionProgress, [0, 1], [0, -80], {
+    easing: Easing.in(Easing.cubic),
   });
-  const slideOutOpacity = interpolate(transitionProgress, [0, 0.5], [1, 0], {
+  const fadeOutOpacity = interpolate(transitionProgress, [0, 0.6], [1, 0], {
     extrapolateRight: "clamp",
   });
   
-  const slideInX = interpolate(transitionProgress, [0, 1], [150, 0], {
-    easing: Easing.out(Easing.quad),
+  const fadeInY = interpolate(transitionProgress, [0, 1], [80, 0], {
+    easing: Easing.out(Easing.cubic),
   });
-  const slideInOpacity = interpolate(transitionProgress, [0.5, 1], [0, 1], {
+  const fadeInOpacity = interpolate(transitionProgress, [0.4, 1], [0, 1], {
     extrapolateLeft: "clamp",
   });
   
@@ -89,94 +87,124 @@ export const Scene4Channels: React.FC = () => {
         alignItems: "center",
         fontFamily: "Inter, system-ui, sans-serif",
         opacity: sceneOpacity,
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      {/* Header */}
+      {/* Grid Background */}
       <div
         style={{
-          fontSize: 64,
-          fontWeight: 700,
-          color: COLORS.textPrimary,
-          marginBottom: 60,
-          opacity: headerOpacity,
+          position: "absolute",
+          inset: 0,
+          backgroundImage: `
+            linear-gradient(${COLORS.grid} 1px, transparent 1px),
+            linear-gradient(90deg, ${COLORS.grid} 1px, transparent 1px)
+          `,
+          backgroundSize: "50px 50px",
         }}
-      >
-        Connect with
-      </div>
+      />
       
-      {/* Platform Display */}
-      <div style={{ position: "relative", height: 200, width: 600 }}>
-        {/* Current Platform */}
+      {/* Platform Display - Fixed "Connect with" + changing logo/text */}
+      <div style={{ 
+        position: "relative", 
+        height: 120, 
+        width: 1920,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 24,
+      }}>
+        {/* Fixed "Connect with" text */}
         <div
           style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            transform: `translateX(${slideOutX}px)`,
-            opacity: slideOutOpacity,
+            fontSize: 96,
+            fontWeight: 700,
+            color: COLORS.textPrimary,
+            whiteSpace: "nowrap",
           }}
         >
-          <div
-            style={{
-              width: 80,
-              height: 80,
-              borderRadius: 20,
-              backgroundColor: currentPlatform?.color,
-              marginBottom: 20,
-              boxShadow: `0 0 60px ${currentPlatform?.color}80`,
-            }}
-          />
-          <div
-            style={{
-              fontSize: 72,
-              fontWeight: 700,
-              color: currentPlatform?.color,
-              filter: `drop-shadow(0 0 30px ${currentPlatform?.color})`,
-            }}
-          >
-            {currentPlatform?.name}
-          </div>
+          Connect with
         </div>
         
-        {/* Next Platform (during transition) */}
-        {isTransitioning && nextPlatform && (
+        {/* Changing content container */}
+        <div style={{ 
+          position: "relative", 
+          width: 500, 
+          height: 120,
+          display: "flex",
+          alignItems: "center",
+        }}>
+          {/* Current Platform - fades up */}
           <div
             style={{
               position: "absolute",
-              inset: 0,
+              left: 0,
               display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
+              flexDirection: "row",
               alignItems: "center",
-              transform: `translateX(${slideInX}px)`,
-              opacity: slideInOpacity,
+              gap: 24,
+              transform: `translateY(${fadeOutY}px)`,
+              opacity: fadeOutOpacity,
+              whiteSpace: "nowrap",
             }}
           >
-            <div
+            <Img
+              src={staticFile(currentPlatform?.logo || "")}
+              alt={currentPlatform?.name}
               style={{
-                width: 80,
-                height: 80,
-                borderRadius: 20,
-                backgroundColor: nextPlatform.color,
-                marginBottom: 20,
-                boxShadow: `0 0 60px ${nextPlatform.color}80`,
+                width: currentPlatform?.logoSize || 100,
+                height: currentPlatform?.logoSize || 100,
+                objectFit: "contain",
               }}
             />
             <div
               style={{
-                fontSize: 72,
+                fontSize: 96,
                 fontWeight: 700,
-                color: nextPlatform.color,
-                filter: `drop-shadow(0 0 30px ${nextPlatform.color})`,
+                color: currentPlatform?.color,
               }}
             >
-              {nextPlatform.name}
+              {currentPlatform?.name}
             </div>
           </div>
-        )}
+          
+          {/* Next Platform - fades in from bottom */}
+          {isTransitioning && nextPlatform && (
+            <div
+              style={{
+                position: "absolute",
+                left: 0,
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 24,
+                transform: `translateY(${fadeInY}px)`,
+                opacity: fadeInOpacity,
+                whiteSpace: "nowrap",
+              }}
+            >
+              <Img
+                src={staticFile(nextPlatform.logo)}
+                alt={nextPlatform.name}
+                style={{
+                  width: nextPlatform.logoSize || 100,
+                  height: nextPlatform.logoSize || 100,
+                  objectFit: "contain",
+                }}
+              />
+              <div
+                style={{
+                  fontSize: 96,
+                  fontWeight: 700,
+                  color: nextPlatform.color,
+                }}
+              >
+                {nextPlatform.name}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
       
       {/* Particle Dissolve Effect */}

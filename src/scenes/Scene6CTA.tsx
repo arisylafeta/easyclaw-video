@@ -1,9 +1,10 @@
 import React from "react";
-import { interpolate, spring, useCurrentFrame, useVideoConfig, Easing } from "remotion";
+import { interpolate, spring, useCurrentFrame, useVideoConfig, Easing, Img, staticFile } from "remotion";
 
 const COLORS = {
-  bgGradient: "linear-gradient(135deg, #FFD54F 0%, #FFB300 100%)",
-  textPrimary: "#1F2937",
+  bg: "#0a0a0a",
+  grid: "rgba(249, 115, 22, 0.1)",
+  textPrimary: "#ffffff",
   accentOrange: "#f97316",
   textWhite: "#FFFFFF",
 };
@@ -26,6 +27,15 @@ export const Scene6CTA: React.FC = () => {
     durationInFrames: 15,
   });
   const logoScale = interpolate(logoProgress, [0, 1], [0, 1]);
+  
+  // Logo animates upward (1.0-2.0s = 30-60 frames)
+  const logoUpProgress = interpolate(frame, [30, 60], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const logoY = interpolate(logoUpProgress, [0, 1], [0, -60], {
+    easing: Easing.out(Easing.cubic),
+  });
   
   // Logo pulse glow
   const pulseFrame = frame - 30;
@@ -60,11 +70,11 @@ export const Scene6CTA: React.FC = () => {
   
   // Cursor hover (2.5-3.5s)
   const cursorVisible = frame >= 75 && frame < 120;
-  const cursorX = interpolate(frame, [75, 90], [300, 0], {
+  const cursorX = interpolate(frame, [75, 90], [350, 80], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const cursorY = interpolate(frame, [75, 90], [200, 50], {
+  const cursorY = interpolate(frame, [75, 90], [250, 80], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -74,40 +84,58 @@ export const Scene6CTA: React.FC = () => {
       style={{
         width: "100%",
         height: "100%",
-        background: COLORS.bgGradient,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
+        backgroundColor: COLORS.bg,
         fontFamily: "Inter, system-ui, sans-serif",
-        filter: `blur(${blurResolve}px)`,
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      {/* Logo */}
+      {/* Grid Background - no blur */}
       <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: `
+            linear-gradient(${COLORS.grid} 1px, transparent 1px),
+            linear-gradient(90deg, ${COLORS.grid} 1px, transparent 1px)
+          `,
+          backgroundSize: "50px 50px",
+        }}
+      />
+      {/* Content Container with blur */}
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          filter: `blur(${blurResolve}px)`,
+        }}
+      >
+      {/* Logo */}
+      <Img
+        src={staticFile("logo.png")}
+        alt="EasyClaw"
         style={{
           width: 120,
           height: 120,
           borderRadius: 24,
-          backgroundColor: COLORS.accentOrange,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          transform: `scale(${logoScale})`,
+          objectFit: "cover",
+          transform: `scale(${logoScale}) translateY(${logoY}px)`,
           marginBottom: 40,
           boxShadow: `0 0 ${glowSize}px rgba(249, 115, 22, 0.5)`,
         }}
-      >
-        <span style={{ fontSize: 60 }}>🦞</span>
-      </div>
+      />
       
       {/* Main Text */}
       <div
         style={{
-          fontSize: 48,
+          fontSize: 72,
           fontWeight: 700,
           color: COLORS.textPrimary,
-          marginBottom: 16,
+          marginBottom: 24,
         }}
       >
         {displayText}
@@ -116,14 +144,14 @@ export const Scene6CTA: React.FC = () => {
       {/* URL */}
       <div
         style={{
-          fontSize: 32,
+          fontSize: 48,
           fontWeight: 600,
           color: COLORS.accentOrange,
           marginBottom: 48,
           opacity: urlOpacity,
         }}
       >
-        EasyClaw.ai
+        https://easyclaw.ai
       </div>
       
       {/* CTA Button */}
@@ -134,10 +162,10 @@ export const Scene6CTA: React.FC = () => {
       >
         <div
           style={{
-            padding: "20px 40px",
+            padding: "32px 64px",
             backgroundColor: COLORS.accentOrange,
-            borderRadius: 12,
-            fontSize: 24,
+            borderRadius: 16,
+            fontSize: 36,
             fontWeight: 700,
             color: COLORS.textWhite,
             transform: `scale(${buttonScale * buttonPulse})`,
@@ -163,6 +191,7 @@ export const Scene6CTA: React.FC = () => {
             }}
           />
         )}
+      </div>
       </div>
     </div>
   );

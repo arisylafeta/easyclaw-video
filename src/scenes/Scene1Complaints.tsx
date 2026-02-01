@@ -1,9 +1,20 @@
 import React from "react";
-import { interpolate, useCurrentFrame, staticFile, Img } from "remotion";
+import { interpolate, spring, useCurrentFrame, useVideoConfig, Easing, staticFile, Img } from "remotion";
+import { loadFont } from "@remotion/fonts";
 
 const COLORS = {
   bg: "#0a0a0a",
+  textWhite: "#ffffff",
+  accentOrange: "#f97316",
+  grid: "rgba(249, 115, 22, 0.1)",
 };
+
+// Load Clash Display font from local file
+const clashDisplayFont = loadFont({
+  family: "Clash Display",
+  url: staticFile("fonts/ClashDisplay-Semibold.otf"),
+  weight: "600",
+});
 
 // Screenshot filenames with their original dimensions
 const SCREENSHOTS = [
@@ -22,10 +33,7 @@ const SCREENSHOTS = [
   { file: "image (12).png", width: 1062, height: 182 },
 ];
 
-// Pre-calculated positions to FULLY cover screen (including bottom 20%)
-// Extended to y: 1080 to ensure full coverage
-// Random delays for "zest" - images drop at random times (fixed order, no shuffle)
-// Delays spread across 0-30 frames for more dramatic timing
+// Screenshot positions to fill screen
 const SCREENSHOT_CONFIGS = [
   { x: -150, y: -80, rotation: -4, scale: 0.9, delay: 0, screenshotIndex: 0 },
   { x: 300, y: -60, rotation: 3, scale: 0.85, delay: 12, screenshotIndex: 1 },
@@ -40,7 +48,6 @@ const SCREENSHOT_CONFIGS = [
   { x: 850, y: 370, rotation: -3, scale: 0.86, delay: 27, screenshotIndex: 10 },
   { x: 1300, y: 390, rotation: 2, scale: 0.82, delay: 11, screenshotIndex: 11 },
   { x: 200, y: 620, rotation: -2, scale: 0.9, delay: 30, screenshotIndex: 12 },
-  // Additional positions to cover bottom area
   { x: 650, y: 850, rotation: 1, scale: 0.85, delay: 14, screenshotIndex: 0 },
   { x: 1100, y: 870, rotation: -3, scale: 0.88, delay: 26, screenshotIndex: 1 },
   { x: 50, y: 920, rotation: 2, scale: 0.87, delay: 5, screenshotIndex: 2 },
@@ -49,75 +56,100 @@ const SCREENSHOT_CONFIGS = [
   { x: 1400, y: 930, rotation: -2, scale: 0.81, delay: 17, screenshotIndex: 5 },
 ];
 
+// SCENE 1: SCREENSHOTS CASCADE (0:05 - 0:09)
+// Screenshots drop on top of the CLI chaos from Scene 0
 export const Scene1Complaints: React.FC = () => {
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  // Screenshots drop in (0-4 seconds = 0-120 frames)
+  // Then hold briefly before transition
   
-  // Transition starts at frame 90 (3 seconds), ends at 120 (4 seconds)
-  const transitionProgress = interpolate(frame, [90, 120], [0, 1], {
+  // Exit transition (4-5s = 120-150 frames)
+  const exitProgress = interpolate(frame, [120, 150], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
   
-  const containerScale = interpolate(transitionProgress, [0, 1], [1, 0.3]);
-  const containerOpacity = interpolate(transitionProgress, [0, 0.8], [1, 0]);
-  
+  const exitScale = interpolate(exitProgress, [0, 1], [1, 0.3], {
+    easing: Easing.in(Easing.cubic),
+  });
+  const exitOpacity = interpolate(exitProgress, [0, 0.7], [1, 0]);
+
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        backgroundColor: COLORS.bg,
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
+    <>
       <div
         style={{
           width: "100%",
           height: "100%",
+          backgroundColor: COLORS.bg,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontFamily: "'Clash Display', Inter, system-ui, sans-serif",
+          transform: `scale(${exitScale})`,
+          opacity: exitOpacity,
+          position: "relative",
+        }}
+      >
+      {/* Grid Background */}
+      <div
+        style={{
           position: "absolute",
-          transform: `scale(${containerScale})`,
-          opacity: containerOpacity,
-          transformOrigin: "center center",
+          inset: 0,
+          backgroundImage: `
+            linear-gradient(${COLORS.grid} 1px, transparent 1px),
+            linear-gradient(90deg, ${COLORS.grid} 1px, transparent 1px)
+          `,
+          backgroundSize: "50px 50px",
+        }}
+      />
+      
+      {/* Screenshots layer - fills entire screen */}
+      <div
+        style={{
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          overflow: "hidden",
         }}
       >
         {SCREENSHOT_CONFIGS.map((config, i) => {
-          // Use fixed screenshot index to prevent flickering
           const screenshot = SCREENSHOTS[config.screenshotIndex];
           const startFrame = config.delay;
           const endFrame = config.delay + 12;
-          
-          // Simple scale + fade in with "drop" feel
-          const progress = interpolate(frame, [startFrame, endFrame], [0, 1], {
+
+          const dropProgress = interpolate(frame, [startFrame, endFrame], [0, 1], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
           });
-          
-          // Start from above and scale in
-          const yOffset = interpolate(progress, [0, 1], [-100, 0]);
-          const animScale = interpolate(progress, [0, 1], [0.3, 1]);
-          const opacity = progress;
-          
-          // Apply both animation scale and config scale
+
+          const animScale = interpolate(dropProgress, [0, 1], [0.5, 1]);
+          const opacity = dropProgress;
           const finalScale = animScale * config.scale;
           
+          // Bounce effect
+          const bounceY = interpolate(
+            dropProgress,
+            [0, 0.6, 0.8, 1],
+            [-100, 0, -10, 0],
+            { easing: Easing.out(Easing.cubic) }
+          );
+
           return (
             <div
               key={i}
               style={{
                 position: "absolute",
                 left: config.x,
-                top: config.y + yOffset,
+                top: config.y + bounceY,
                 width: screenshot.width,
                 height: screenshot.height,
                 transform: `rotate(${config.rotation}deg) scale(${finalScale})`,
-                opacity,
-                boxShadow: "0 20px 50px rgba(0,0,0,0.7)",
-                borderRadius: "12px",
+                opacity: opacity,
+                borderRadius: "8px",
                 overflow: "hidden",
-                backgroundColor: "#1a1a1a",
-                transformOrigin: "top left",
-                zIndex: i,
+                boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
               }}
             >
               <Img
@@ -133,5 +165,6 @@ export const Scene1Complaints: React.FC = () => {
         })}
       </div>
     </div>
+    </>
   );
 };
