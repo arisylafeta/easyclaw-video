@@ -13,22 +13,22 @@ const FPS = 30;
 const SCENE_0_START = 0;
 const SCENE_0_DURATION = 5 * FPS;   // 0:00 - 0:05 (150 frames)
 
-// Scene 1: Screenshots cascade + button morph + click (0:05 - 0:15)
+// Scene 1: Screenshots cascade + button morph + click (0:05 - 0:13)
 // Merged Scene1 and Scene2 - now handles the full transition
 const SCENE_1_START = 150;
-const SCENE_1_DURATION = 10 * FPS;   // 0:05 - 0:15 (300 frames)
+const SCENE_1_DURATION = 8 * FPS;   // 0:05 - 0:13 (240 frames)
 
-// Scene 3: Features (0:15 - 0:21)
-const SCENE_3_START = 450;
-const SCENE_3_DURATION = 6 * FPS;   // 0:15 - 0:21 (180 frames)
+// Scene 3: Features (0:13 - 0:19)
+const SCENE_3_START = 390;
+const SCENE_3_DURATION = 6 * FPS;   // 0:13 - 0:19 (180 frames)
 
-// Scene 4: Channels (0:21 - 0:27)
-const SCENE_4_START = 630;
-const SCENE_4_DURATION = 6 * FPS;   // 0:21 - 0:27 (180 frames)
+// Scene 4: Channels (0:19 - 0:25)
+const SCENE_4_START = 570;
+const SCENE_4_DURATION = 6 * FPS;   // 0:19 - 0:25 (180 frames)
 
-// Scene 6: CTA (0:27 - 0:32)
-const SCENE_6_START = 810;
-const SCENE_6_DURATION = 5 * FPS;   // 0:27 - 0:32 (150 frames)
+// Scene 6: CTA (0:25 - 0:30)
+const SCENE_6_START = 750;
+const SCENE_6_DURATION = 5 * FPS;   // 0:25 - 0:30 (150 frames)
 
 const TOTAL_FRAMES = SCENE_6_START + SCENE_6_DURATION;
 

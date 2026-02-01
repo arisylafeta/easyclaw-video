@@ -54,8 +54,8 @@ export const Scene1Complaints: React.FC = () => {
 
   // PHASE 1: Screenshots drop in (0-3 seconds = 0-90 frames)
   // PHASE 2: Morph to button (3-4 seconds = 90-120 frames)
-  // PHASE 3: Button with text (4-10 seconds = 120-300 frames)
-  // PHASE 4: Click and explode (10-11 seconds = 300-330 frames)
+  // PHASE 3: Button with text (4-7 seconds = 120-210 frames) - EXTENDED
+  // PHASE 4: Click and explode (7-8 seconds = 210-240 frames)
 
   // Morph progress: 0 = full screen, 1 = button size
   const morphProgress = interpolate(frame, [90, 120], [0, 1], {
@@ -86,15 +86,47 @@ export const Scene1Complaints: React.FC = () => {
   });
   const textEntranceOpacity = textEntranceProgress;
 
-  // Explosion to next scene (10-11s = 300-330 frames)
-  const explosionProgress = interpolate(frame, [300, 330], [0, 1], {
+  // Cursor animation (6.5-7s = 195-210 frames)
+  // Cursor fades in from right, moves to center, and clicks
+  const cursorStartFrame = 195;
+  const cursorEndFrame = 210;
+  const cursorProgress = interpolate(frame, [cursorStartFrame, cursorEndFrame], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const explosionScale = interpolate(explosionProgress, [0, 1], [1, 3], {
+
+  // Cursor fades in
+  const cursorOpacity = interpolate(frame, [cursorStartFrame, cursorStartFrame + 10], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  // Cursor moves from right to center
+  const cursorX = interpolate(cursorProgress, [0, 1], [2200, 960], {
+    easing: Easing.out(Easing.cubic),
+  });
+  const cursorY = interpolate(cursorProgress, [0, 1], [600, 540], {
+    easing: Easing.out(Easing.cubic),
+  });
+
+  // Click animation at the end (frame 208-210)
+  const clickProgress = interpolate(frame, [208, 210], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const cursorScale = 1 - interpolate(clickProgress, [0, 1], [0, 0.2]);
+  const clickRingScale = interpolate(clickProgress, [0, 1], [0.5, 2]);
+  const clickRingOpacity = interpolate(clickProgress, [0, 0.5, 1], [0, 1, 0]);
+
+  // Explosion to next scene (7-8s = 210-240 frames)
+  const explosionProgress = interpolate(frame, [210, 240], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const explosionScale = interpolate(explosionProgress, [0, 1], [1, 5], {
     easing: Easing.out(Easing.exp),
   });
-  const explosionOpacity = interpolate(explosionProgress, [0, 0.7], [1, 0], {
+  const explosionOpacity = interpolate(explosionProgress, [0, 0.5], [1, 0], {
     extrapolateRight: "clamp",
   });
 
@@ -116,14 +148,14 @@ export const Scene1Complaints: React.FC = () => {
   });
   const textOpacity = textAnimationProgress;
 
-  // First scene fade out (150-180 frames): "We introduce You" and "EasyClaw"
-  const firstSceneFadeOut = interpolate(frame, [150, 180], [1, 0], {
+  // First scene fade out (150-175 frames): "We introduce You" and "EasyClaw" - EXTENDED
+  const firstSceneFadeOut = interpolate(frame, [150, 175], [1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
-  // Second scene fade in (180-210 frames): "The easiest setup for" and "OpenClaw"
-  const secondSceneFadeIn = interpolate(frame, [180, 210], [0, 1], {
+  // Second scene fade in (175-195 frames): "The easiest setup for" and "OpenClaw"
+  const secondSceneFadeIn = interpolate(frame, [175, 195], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -403,6 +435,56 @@ export const Scene1Complaints: React.FC = () => {
           }}
         />
       </div>
+
+      {/* Cursor animation - fades in from right and clicks center */}
+      {frame >= cursorStartFrame && (
+        <div
+          style={{
+            position: "absolute",
+            left: cursorX,
+            top: cursorY,
+            transform: `translate(-50%, -50%) scale(${cursorScale})`,
+            zIndex: 100,
+            opacity: cursorOpacity,
+            pointerEvents: "none",
+          }}
+        >
+          {/* Click ring effect */}
+          {frame >= 208 && (
+            <div
+              style={{
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+                width: 60,
+                height: 60,
+                borderRadius: "50%",
+                border: `3px solid ${COLORS.accentOrange}`,
+                opacity: clickRingOpacity,
+                transform: `translate(-50%, -50%) scale(${clickRingScale})`,
+              }}
+            />
+          )}
+          {/* Cursor SVG */}
+          <svg
+            width="48"
+            height="48"
+            viewBox="0 0 24 24"
+            fill="none"
+            style={{
+              filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.5))",
+            }}
+          >
+            <path
+              d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87c.44 0 .66-.53.35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z"
+              fill="white"
+              stroke="black"
+              strokeWidth="1"
+            />
+          </svg>
+        </div>
+      )}
 
     </div>
   );
