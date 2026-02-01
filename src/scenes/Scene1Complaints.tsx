@@ -169,19 +169,28 @@ export const Scene1Complaints: React.FC = () => {
         width: "100%",
         height: "100%",
         backgroundColor: COLORS.bg,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        fontFamily: "Inter, system-ui, sans-serif",
-        transform: `scale(${explosionScale})`,
-        opacity: explosionOpacity,
         position: "relative",
       }}
     >
-      {/* Grid background with blobs - appears when morph starts */}
+      {/* Grid background with blobs - appears when morph starts and persists after explosion */}
       {showGridBackground && (
         <GridBackground color={COLORS.grid} size="100px" showBlobs />
       )}
+
+      {/* Main content container that explodes */}
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontFamily: "Inter, system-ui, sans-serif",
+          transform: `scale(${explosionScale})`,
+          opacity: explosionOpacity,
+          position: "relative",
+        }}
+      >
 
       {/* First scene: "We introduce You" text - fades out after appearing */}
       {showContainer && firstSceneFadeOut > 0 && (
@@ -486,6 +495,7 @@ export const Scene1Complaints: React.FC = () => {
         </div>
       )}
 
+      </div>
     </div>
   );
 };
