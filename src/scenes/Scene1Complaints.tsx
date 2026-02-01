@@ -116,6 +116,21 @@ export const Scene1Complaints: React.FC = () => {
   });
   const textOpacity = textAnimationProgress;
 
+  // First scene fade out (150-180 frames): "We introduce You" and "EasyClaw"
+  const firstSceneFadeOut = interpolate(frame, [150, 180], [1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  // Second scene fade in (180-210 frames): "The easiest setup for" and "OpenClaw"
+  const secondSceneFadeIn = interpolate(frame, [180, 210], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const secondSceneSlideUp = interpolate(secondSceneFadeIn, [0, 1], [50, 0], {
+    easing: Easing.out(Easing.cubic),
+  });
+
   return (
     <div
       style={{
@@ -136,8 +151,8 @@ export const Scene1Complaints: React.FC = () => {
         <GridBackground color={COLORS.grid} size="100px" showBlobs />
       )}
 
-      {/* "We introduce You" text - in top 40% of screen, 3x bigger */}
-      {showContainer && (
+      {/* First scene: "We introduce You" text - fades out after appearing */}
+      {showContainer && firstSceneFadeOut > 0 && (
         <div
           style={{
             position: "absolute",
@@ -145,7 +160,7 @@ export const Scene1Complaints: React.FC = () => {
             top: "30%",
             transform: `translate(-50%, calc(-50% + ${textSlideUp2}px))`,
             zIndex: 6,
-            opacity: textOpacity,
+            opacity: textOpacity * firstSceneFadeOut,
           }}
         >
           <div
@@ -163,8 +178,35 @@ export const Scene1Complaints: React.FC = () => {
         </div>
       )}
 
-      {/* Glowing border with EasyClaw - dead center */}
-      {showContainer && (
+      {/* Second scene: "The easiest setup for" text - fades in */}
+      {showContainer && secondSceneFadeIn > 0 && (
+        <div
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "30%",
+            transform: `translate(-50%, calc(-50% + ${secondSceneSlideUp}px))`,
+            zIndex: 6,
+            opacity: secondSceneFadeIn,
+          }}
+        >
+          <div
+            style={{
+              fontSize: 140,
+              fontWeight: 600,
+              color: COLORS.textWhite,
+              fontFamily: "Inter, system-ui, sans-serif",
+              textAlign: "center",
+              whiteSpace: "nowrap",
+            }}
+          >
+            The easiest setup for
+          </div>
+        </div>
+      )}
+
+      {/* First scene: Glowing border with EasyClaw - fades out */}
+      {showContainer && firstSceneFadeOut > 0 && (
         <div
           style={{
             position: "absolute",
@@ -172,7 +214,7 @@ export const Scene1Complaints: React.FC = () => {
             top: "50%",
             transform: `translate(-50%, calc(-50% + ${textSlideUp2}px))`,
             zIndex: 5,
-            opacity: textOpacity,
+            opacity: textOpacity * firstSceneFadeOut,
           }}
         >
           <div
@@ -195,6 +237,43 @@ export const Scene1Complaints: React.FC = () => {
               }}
             >
               EasyClaw
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* Second scene: Glowing border with OpenClaw - fades in */}
+      {showContainer && secondSceneFadeIn > 0 && (
+        <div
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            transform: `translate(-50%, calc(-50% + ${secondSceneSlideUp}px))`,
+            zIndex: 5,
+            opacity: secondSceneFadeIn,
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "#0a0a0a",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {/* "OpenClaw" text - inside the border */}
+            <span
+              style={{
+                fontSize: 72,
+                fontWeight: 600,
+                color: COLORS.accentOrange,
+                fontFamily: "ClashDisplay, Inter, system-ui, sans-serif",
+              }}
+            >
+              OpenClaw
             </span>
           </div>
         </div>
