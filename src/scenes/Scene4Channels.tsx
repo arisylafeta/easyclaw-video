@@ -1,5 +1,6 @@
 import React from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig, Easing, Img, staticFile } from "remotion";
+import { GridBackground } from "../components/GridBackground";
 
 const COLORS = {
   bg: "#0a0a0a",
@@ -91,16 +92,32 @@ export const Scene4Channels: React.FC = () => {
         overflow: "hidden",
       }}
     >
-      {/* Grid Background */}
+      <GridBackground color={COLORS.grid} size="100px" />
+
+      {/* Faint greenish-blue blob */}
       <div
         style={{
           position: "absolute",
-          inset: 0,
-          backgroundImage: `
-            linear-gradient(${COLORS.grid} 1px, transparent 1px),
-            linear-gradient(90deg, ${COLORS.grid} 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
+          width: "800px",
+          height: "800px",
+          left: "-200px",
+          top: "50%",
+          transform: "translateY(-50%)",
+          background: "radial-gradient(circle, rgba(34, 197, 94, 0.2) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Faint orangeish-red blob */}
+      <div
+        style={{
+          position: "absolute",
+          width: "900px",
+          height: "900px",
+          right: "-300px",
+          top: "30%",
+          background: "radial-gradient(circle, rgba(239, 68, 68, 0.2) 0%, transparent 70%)",
+          pointerEvents: "none",
         }}
       />
       
